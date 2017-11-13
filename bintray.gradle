@@ -1,0 +1,4 @@
+ext {
+    bintray_user = 'nihilus'
+    bintray_apikey = 'fce56cfe9085fba6698fd798103ad48df95cee92'
+}
