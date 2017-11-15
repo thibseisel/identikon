@@ -1,6 +1,6 @@
 package com.github.thibseisel.kdenticon.draw.raster
 
-import com.github.thibseisel.javadenticon.rendering.PointF
+import com.github.thibseisel.kdenticon.rendering.PointF
 
 /**
  * Specifies an edge of a polygon that is being rendered.

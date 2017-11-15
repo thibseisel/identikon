@@ -50,14 +50,12 @@ class ColorTheme(hue: Float, style: IdenticonStyle) {
      */
     val count: Int get() = 5
 
-    operator fun get(index: Int): Int {
-        return when (index) {
-            0 -> darkGray
-            1 -> color
-            2 -> lightGray
-            3 -> lightColor
-            4 -> darkColor
-            else -> throw IndexOutOfBoundsException()
-        }
+    operator fun get(index: Int) = when (index) {
+        0 -> darkGray
+        1 -> color
+        2 -> lightGray
+        3 -> lightColor
+        4 -> darkColor
+        else -> throw IndexOutOfBoundsException()
     }
 }

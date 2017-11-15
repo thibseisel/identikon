@@ -3,20 +3,6 @@
 package com.github.thibseisel.kdenticon.rendering
 
 /**
- * Creates the representation of a color in the sRGB color space as a 32-bits integer,
- * ignoring the alpha channel. The resulting color will therefore be fully opaque.
- *
- * Each channel value is expected to fit in `[0, 255]`.
- * If it doesn't, any extra bit other than the four first ones are set to 0.
- *
- * @param red The value of the red channel, must be in `[0, 255]`
- * @param green The value of the green channel, must be in `[0, 255]`
- * @param blue The value of the blue channel, must be in `[0, 255]`
- */
-@JvmName("fromRgb")
-internal fun colorOf(red: Int, green: Int, blue: Int): Int = colorOf(0xff, red, green, blue)
-
-/**
  * Create the representation of a color in the sRGB color space as a 32-bits integer.
  *
  * Each channel value is expected to fit in `[0, 255]`.
@@ -167,5 +153,5 @@ internal fun colorFromHslCompensated(hue: Float, saturation: Float, lightness: F
  * @return a string representation of this color formatted as `#aarrggbb`.
  */
 internal fun Int.toColorString(): String {
-    return String.format("%08x", this)
+    return '#' + String.format("%08x", this)
 }

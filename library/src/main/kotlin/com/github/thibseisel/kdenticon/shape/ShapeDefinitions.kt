@@ -3,7 +3,6 @@ package com.github.thibseisel.kdenticon.shape
 import com.github.thibseisel.kdenticon.rendering.PointF
 import com.github.thibseisel.kdenticon.rendering.Renderer
 import com.github.thibseisel.kdenticon.rendering.TriangleDirection
-import com.github.thibseisel.kdenticon.shape.ShapeDefinition
 
 /**
  * Default definition of the shapes that are placed around the center of the icon.
@@ -227,7 +226,7 @@ internal enum class CenterShapes : ShapeDefinition {
             val outer = inner * 3f
 
             renderer.addRectangle(0f, 0f, fCell, fCell)
-            renderer.addCircle(outer, outer, cell - inner - outer, true)
+            renderer.addCircle(outer, outer, fCell - inner - outer, true)
         }
     },
 
@@ -249,7 +248,7 @@ internal enum class CenterShapes : ShapeDefinition {
      */
     CIRCLE {
         override fun render(renderer: Renderer, cell: Int, index: Int) {
-            val m = cell * 0.14f
+            val m = cell * 0.4f
             val s = cell * 1.2f
 
             if (index != 0) {

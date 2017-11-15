@@ -1,8 +1,8 @@
 package com.github.thibseisel.kdenticon
 
 import android.graphics.*
-import com.github.thibseisel.javadenticon.rendering.PointF
-import com.github.thibseisel.javadenticon.rendering.Renderer
+import com.github.thibseisel.kdenticon.rendering.PointF
+import com.github.thibseisel.kdenticon.rendering.Renderer
 
 /**
  * Renders icons onto a Android bitmap using the framework's Canvas.
@@ -10,25 +10,31 @@ import com.github.thibseisel.javadenticon.rendering.Renderer
 class AndroidBitmapRenderer(bitmap: Bitmap) : Renderer() {
 
     private val canvas = Canvas(bitmap)
-    private val paint = Paint()
     private val path = Path()
+    private val paint = Paint().apply {
+        style = Paint.Style.FILL
+        isAntiAlias = true
+    }
 
     override fun addPolygonNoTransform(points: Array<PointF>) {
-        path.reset()
-        path.moveTo(points[0].x, points[0].y)
-        for (i in 1 until points.size) {
-            path.lineTo(points[i].x, points[i].y)
+        if (points.isNotEmpty()) {
+
+            path.moveTo(points[0].x, points[0].y)
+            points.forEach { path.lineTo(it.x, it.y) }
+
+            // Close the shape by linking the last point to the first one
+            path.lineTo(points[0].x, points[0].y)
         }
 
-        path.close()
-        canvas.drawPath(path, paint)
     }
 
     override fun addCircleNoTransform(location: PointF, diameter: Float, counterClockwise: Boolean) {
         val radius = diameter / 2f
         val cx = location.x + radius
         val cy = location.y + radius
-        canvas.drawCircle(cx, cy, radius, paint)
+        val direction = if (counterClockwise) Path.Direction.CCW else Path.Direction.CW
+
+        path.addCircle(cx, cy, radius, direction)
     }
 
     override fun setBackground(color: Int) {
@@ -36,8 +42,10 @@ class AndroidBitmapRenderer(bitmap: Bitmap) : Renderer() {
     }
 
     override fun renderShape(color: Int, action: Runnable) {
-        paint.color = color
-        paint.style = Paint.Style.FILL
+        path.reset()
         action.run()
+
+        paint.color = color
+        canvas.drawPath(path, paint)
     }
 }

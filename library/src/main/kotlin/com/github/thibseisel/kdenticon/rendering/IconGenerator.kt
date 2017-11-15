@@ -6,6 +6,7 @@ import com.github.thibseisel.kdenticon.shape.xy
 import com.github.thibseisel.kdenticon.IdenticonStyle
 import com.github.thibseisel.kdenticon.shape.Shape
 import com.github.thibseisel.kdenticon.shape.ShapeCategory
+import sun.rmi.runtime.Log
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -38,14 +39,14 @@ open class IconGenerator {
      * @param hash array of bytes that can be used as a decision factor to determine the color hue to use
      * @return a color hue to use for the generated icons in range `[0.0, 1.0]`.
      */
-    open protected fun computeHue(hash: ByteArray): Float {
+    open fun computeHue(hash: ByteArray): Float {
 
         // Take the first 4 bytes, making sure they are read as big endian
         val buffer = ByteBuffer.wrap(hash, 0, 4).order(ByteOrder.BIG_ENDIAN)
 
         // Convert the resulting integer to Long to avoid negative numbers.
         // As numbers are represented with the 2's complement on the JVM, they may be negative if the 31's bit is 1.
-        val actualValue = buffer.getInt().toLong() and 0xFFFFFFFF
+        val actualValue = buffer.getInt().toLong() and 0xFFFFFFFFL
 
         return actualValue.toFloat() / 0xFFFFFFFFL
     }
@@ -54,16 +55,19 @@ open class IconGenerator {
      * Called by the generator to retrieve a specified octet from a byte array.
      * Clients may override this to transform the index or the returned byte.
      *
-     * The default implementation returns the byte from the `source` array at the given `index`.
+     * The default implementation returns the byte at the given position as a positive number.
      *
      * @param source The array from which the octet will be retrieved
      * @param index The zero based index of the octet to be returned
      *
      * @return a specific octet from the `source` array
      */
-    open protected fun getOctet(source: ByteArray, index: Int): Byte {
-        // TODO Why is it so complex in JDenticon ?
-        return source[index]
+    open protected fun getOctet(source: ByteArray, index: Int): Int {
+        // Prevent the index from being greater than the source array's size
+        val rotatedIndex = index % source.size
+        val byteAtPosition = source[rotatedIndex]
+
+        return 0xff and byteAtPosition.toInt()
     }
 
     /**
@@ -97,7 +101,7 @@ open class IconGenerator {
             else getOctet(hash, category.rotationIndex)
 
             val octet = getOctet(hash, category.shapeIndex)
-            val index = Math.abs(octet.toInt()) % category.shapes.size
+            val index = octet % category.shapes.size
 
             val shape = category.shapes[index]
             shapes.add(Shape(
@@ -177,7 +181,7 @@ open class IconGenerator {
                                         colorTheme: ColorTheme, hash: ByteArray) {
         // Ensure rect is quadratic and a multiple of the cell count
         val normalizedRect = normalizedRectangle(rect)
-        val cellSize = normalizedRect.width / cellCount
+        val cellSize = normalizedRect.width / this.cellCount
 
         val shapes = getShapes(colorTheme, hash)
         for (shape in shapes) {
@@ -223,7 +227,7 @@ open class IconGenerator {
                         shapes = OuterShapes.values(),
                         shapeIndex = 2,
                         rotationIndex = 3,
-                        positions = arrayOf(1 xy 0, 2 xy 0, 2 xy 3, 1 xy 3, 3 xy 1, 3 xy 2, 0 xy 2)
+                        positions = arrayOf(1 xy 0, 2 xy 0, 2 xy 3, 1 xy 3, 0 xy 1, 3 xy 1, 3 xy 2, 0 xy 2)
                 ),
 
                 // Shapes that are rendered at the corners of the icons
