@@ -1,8 +1,9 @@
-package com.github.thibseisel.javadenticon.shape
+package com.github.thibseisel.kdenticon.shape
 
-import com.github.thibseisel.javadenticon.rendering.PointF
-import com.github.thibseisel.javadenticon.rendering.Renderer
-import com.github.thibseisel.javadenticon.rendering.TriangleDirection
+import com.github.thibseisel.kdenticon.rendering.PointF
+import com.github.thibseisel.kdenticon.rendering.Renderer
+import com.github.thibseisel.kdenticon.rendering.TriangleDirection
+import com.github.thibseisel.kdenticon.shape.ShapeDefinition
 
 /**
  * Default definition of the shapes that are placed around the center of the icon.

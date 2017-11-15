@@ -1,6 +1,6 @@
-package com.github.thibseisel.javadenticon.rendering
+package com.github.thibseisel.kdenticon.rendering
 
-import com.github.thibseisel.javadenticon.Identicon
+import com.github.thibseisel.kdenticon.Identicon
 
 /**
  * Base class for rendering shapes in an identicon.

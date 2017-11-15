@@ -1,4 +1,4 @@
-package com.github.thibseisel.javadenticon.rendering
+package com.github.thibseisel.kdenticon.rendering
 
 import java.io.OutputStream
 

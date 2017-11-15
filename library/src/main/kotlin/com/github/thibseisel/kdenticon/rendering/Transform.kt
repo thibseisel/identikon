@@ -1,4 +1,4 @@
-package com.github.thibseisel.javadenticon.rendering
+package com.github.thibseisel.kdenticon.rendering
 
 /**
  * Defines a mathematical application that translates and rotates a point being rendered.

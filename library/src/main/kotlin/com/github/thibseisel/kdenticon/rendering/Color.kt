@@ -1,6 +1,6 @@
 @file:JvmName("Color")
 
-package com.github.thibseisel.javadenticon.rendering
+package com.github.thibseisel.kdenticon.rendering
 
 /**
  * Creates the representation of a color in the sRGB color space as a 32-bits integer,

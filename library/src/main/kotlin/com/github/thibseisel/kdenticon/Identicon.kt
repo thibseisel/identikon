@@ -1,9 +1,9 @@
-package com.github.thibseisel.javadenticon
+package com.github.thibseisel.kdenticon
 
-import com.github.thibseisel.javadenticon.rendering.IconGenerator
-import com.github.thibseisel.javadenticon.rendering.PngRenderer
-import com.github.thibseisel.javadenticon.rendering.Rectangle
-import com.github.thibseisel.javadenticon.rendering.Renderer
+import com.github.thibseisel.kdenticon.rendering.IconGenerator
+import com.github.thibseisel.kdenticon.rendering.PngRenderer
+import com.github.thibseisel.kdenticon.rendering.Rectangle
+import com.github.thibseisel.kdenticon.rendering.Renderer
 import java.io.OutputStream
 import java.security.MessageDigest
 

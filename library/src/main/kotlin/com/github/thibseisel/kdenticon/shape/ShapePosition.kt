@@ -1,4 +1,4 @@
-package com.github.thibseisel.javadenticon.shape
+package com.github.thibseisel.kdenticon.shape
 
 /**
  * Specifies in which cell a shape will be rendered.

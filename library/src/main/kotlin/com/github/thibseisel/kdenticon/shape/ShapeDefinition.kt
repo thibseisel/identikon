@@ -1,6 +1,6 @@
-package com.github.thibseisel.javadenticon.shape
+package com.github.thibseisel.kdenticon.shape
 
-import com.github.thibseisel.javadenticon.rendering.Renderer
+import com.github.thibseisel.kdenticon.rendering.Renderer
 
 /**
  * Defines instructions used to render a shape.
