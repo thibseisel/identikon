@@ -1,6 +1,6 @@
 package com.github.thibseisel.kdenticon.draw
 
-import com.github.thibseisel.javadenticon.rendering.PointF
+import com.github.thibseisel.kdenticon.rendering.PointF
 
 internal class Path {
 
