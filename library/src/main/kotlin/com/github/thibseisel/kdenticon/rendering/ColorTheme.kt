@@ -1,6 +1,6 @@
-package com.github.thibseisel.javadenticon.rendering
+package com.github.thibseisel.kdenticon.rendering
 
-import com.github.thibseisel.javadenticon.IdenticonStyle
+import com.github.thibseisel.kdenticon.IdenticonStyle
 
 /**
  * Specifies the colors to be used in an [Identicon].

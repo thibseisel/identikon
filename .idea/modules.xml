@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/kdenticon.iml" filepath="$PROJECT_DIR$/kdenticon.iml" />
-      <module fileurl="file://$PROJECT_DIR$/kdenticon-android/app.iml" filepath="$PROJECT_DIR$/kdenticon-android/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kdenticon-android/kdenticon-android.iml" filepath="$PROJECT_DIR$/kdenticon-android/kdenticon-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>
   </component>

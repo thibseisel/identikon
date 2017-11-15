@@ -1,7 +1,11 @@
-package com.github.thibseisel.javadenticon.rendering
+package com.github.thibseisel.kdenticon.rendering
 
-import com.github.thibseisel.javadenticon.IdenticonStyle
-import com.github.thibseisel.javadenticon.shape.*
+import com.github.thibseisel.kdenticon.shape.CenterShapes
+import com.github.thibseisel.kdenticon.shape.OuterShapes
+import com.github.thibseisel.kdenticon.shape.xy
+import com.github.thibseisel.kdenticon.IdenticonStyle
+import com.github.thibseisel.kdenticon.shape.Shape
+import com.github.thibseisel.kdenticon.shape.ShapeCategory
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 

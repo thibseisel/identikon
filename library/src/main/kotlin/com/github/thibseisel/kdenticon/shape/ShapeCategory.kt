@@ -1,4 +1,4 @@
-package com.github.thibseisel.javadenticon.shape
+package com.github.thibseisel.kdenticon.shape
 
 /**
  * Represents a category of shapes that can be rendered in an icon.

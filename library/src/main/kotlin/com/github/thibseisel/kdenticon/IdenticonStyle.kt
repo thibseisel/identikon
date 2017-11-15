@@ -1,4 +1,4 @@
-package com.github.thibseisel.javadenticon
+package com.github.thibseisel.kdenticon
 
 /**
  * Specifies the color style of an identicon.

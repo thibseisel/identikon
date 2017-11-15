@@ -1,4 +1,4 @@
-package com.github.thibseisel.javadenticon
+package com.github.thibseisel.kdenticon
 
 /**
  * A collection of built-in colors.
