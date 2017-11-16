@@ -1,4 +1,4 @@
-package com.github.thibseisel.kdenticon
+package com.github.thibseisel.kdenticon.android
 
 import org.junit.Test
 

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.thibseisel.kdenticon">
+    package="com.github.thibseisel.kdenticon.android">
 
     <application
         android:allowBackup="true"

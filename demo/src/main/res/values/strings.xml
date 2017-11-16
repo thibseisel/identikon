@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Kdenticon</string>
+    <string name="action_save">Save to disk</string>
+    <string name="confirm_icon_saved">icon saved to Pictures directory</string>
 </resources>
