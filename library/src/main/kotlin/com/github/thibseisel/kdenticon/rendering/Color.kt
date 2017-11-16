@@ -155,6 +155,4 @@ internal fun colorFromHslCompensated(hue: Float, saturation: Float, lightness: F
  * @receiver an integer encoding a color in the sRGB color space.
  * @return a string representation of this color formatted as `#aarrggbb`.
  */
-internal fun Int.toColorString(): String {
-    return '#' + String.format("%08x", this)
-}
+internal fun Int.toColorString() = '#' + String.format("%08x", this)

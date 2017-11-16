@@ -11,6 +11,7 @@ version libVersion
 buildscript {
     ext.bintray_version = '1.8.0'
     ext.dokka_version = '0.9.15'
+    ext.junit_platform_version = '1.0.0'
 
     repositories {
         jcenter()
@@ -18,7 +19,7 @@ buildscript {
     dependencies {
         classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${bintray_version}"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokka_version}"
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.2'
+        classpath "org.junit.platform:junit-platform-gradle-plugin:${junit_platform_version}"
     }
 }
 
@@ -46,9 +47,16 @@ repositories {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     testImplementation "junit:junit:$junit_version"
-    testImplementation "org.jetbrains.spek:spek-api:$spek_version"
-    testRuntime "org.jetbrains.spek:spek-junit-platform-engine:$spek_version"
+
+    testImplementation ("org.jetbrains.spek:spek-api:$spek_version") {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+    testRuntime ("org.jetbrains.spek:spek-junit-platform-engine:$spek_version") {
+        exclude group: 'org.junit.platform'
+        exclude group: 'org.jetbrains.kotlin'
+    }
 }
 
 bintray {
