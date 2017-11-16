@@ -9,6 +9,7 @@ Written in Kotlin, it is a port of [Jdenticon](https://github.com/dmester/jdenti
 ![](screenshots/sample_2.png)
 ![](screenshots/sample_3.png)
 ![](screenshots/sample_4.png)
+
 ![](screenshots/sample_5.png)
 ![](screenshots/sample_6.png)
 ![](screenshots/sample_7.png)
