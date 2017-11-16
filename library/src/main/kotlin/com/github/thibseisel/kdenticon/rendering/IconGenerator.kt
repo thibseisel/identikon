@@ -1,12 +1,7 @@
 package com.github.thibseisel.kdenticon.rendering
 
-import com.github.thibseisel.kdenticon.shape.CenterShapes
-import com.github.thibseisel.kdenticon.shape.OuterShapes
-import com.github.thibseisel.kdenticon.shape.xy
 import com.github.thibseisel.kdenticon.IdenticonStyle
-import com.github.thibseisel.kdenticon.shape.Shape
-import com.github.thibseisel.kdenticon.shape.ShapeCategory
-import sun.rmi.runtime.Log
+import com.github.thibseisel.kdenticon.shape.*
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -39,8 +34,13 @@ open class IconGenerator {
      * @param hash array of bytes that can be used as a decision factor to determine the color hue to use
      * @return a color hue to use for the generated icons in range `[0.0, 1.0]`.
      */
-    open fun computeHue(hash: ByteArray): Float {
+    open protected fun computeHue(hash: ByteArray): Float = computeHueInternal(hash)
 
+    /**
+     * Default implementation of [computeHue], externalized for testing purposes.
+     */
+    @Suppress("UsePropertyAccessSyntax")
+    internal fun computeHueInternal(hash: ByteArray): Float {
         // Take the first 4 bytes, making sure they are read as big endian
         val buffer = ByteBuffer.wrap(hash, 0, 4).order(ByteOrder.BIG_ENDIAN)
 
@@ -55,15 +55,23 @@ open class IconGenerator {
      * Called by the generator to retrieve a specified octet from a byte array.
      * Clients may override this to transform the index or the returned byte.
      *
-     * The default implementation returns the byte at the given position as a positive number.
+     * The default implementation returns the byte value at the given `index` in `source`
+     * as an unsigned byte.
      *
      * @param source The array from which the octet will be retrieved
      * @param index The zero based index of the octet to be returned
      *
-     * @return a specific octet from the `source` array
+     * @return a specific octet from the `source` array, in range `[0, 255]`
      */
-    open protected fun getOctet(source: ByteArray, index: Int): Int {
-        // Prevent the index from being greater than the source array's size
+    open protected fun getOctet(source: ByteArray, index: Int): Int =
+            getOctetInternal(source, index)
+
+    /**
+     * Default implementation of [getOctet], externalized for testing purposes.
+     * Returns the byte value at th given `index` in `source` as an unsigned byte.
+     */
+    internal fun getOctetInternal(source: ByteArray, index: Int): Int {
+        // Prevent index from being greater than the source array's size
         val rotatedIndex = index % source.size
         val byteAtPosition = source[rotatedIndex]
 
@@ -108,7 +116,7 @@ open class IconGenerator {
                     definition = shape,
                     color = colorTheme[colorThemeIndex],
                     positions = category.positions,
-                    startRotationIndex = startRotationIndex.toInt()
+                    startRotationIndex = startRotationIndex
             ))
         }
 
@@ -132,6 +140,7 @@ open class IconGenerator {
      * @param rect The rectangle to be normalized
      * @return a rectangle whose size is a multiple of the cell count.
      */
+    @Suppress("MemberVisibilityCanPrivate")
     protected fun normalizedRectangle(rect: Rectangle): Rectangle {
         var size = minOf(rect.width, rect.height)
 
@@ -220,7 +229,7 @@ open class IconGenerator {
     }
 
     private companion object {
-        private val DEFAULT_CATEGORIES = arrayOf<ShapeCategory>(
+        private val DEFAULT_CATEGORIES = arrayOf(
                 // Shapes that are rendered at the outer bounds of the icon
                 ShapeCategory(
                         colorIndex = 8,

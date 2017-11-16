@@ -7,6 +7,9 @@ import org.jetbrains.spek.api.dsl.it
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 
+/**
+ * Specifications for helper functions that manipulates colors.
+ */
 class ColorSpec : Spek({
 
     describe("The sRGB color encoding algorithm") {

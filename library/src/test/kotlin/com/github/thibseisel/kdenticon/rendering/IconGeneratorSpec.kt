@@ -3,33 +3,41 @@ package com.github.thibseisel.kdenticon.rendering
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
-import org.jetbrains.spek.api.dsl.on
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
-import org.junit.runner.RunWith
 import java.nio.ByteBuffer
 import java.util.*
 
 object IconGeneratorSpec : Spek({
 
-    describe("the hue generation algorithm") {
+    describe("The default hue generation algorithm") {
         val generator = IconGenerator()
 
-        on("passing any input") {
+        it("should always compute hue in [0, 1]") {
             val randomBytes = generateRandomBytes()
-            it("should compute hue in [0, 1]") {
-                val hue: Float = generator.computeHue(randomBytes)
-                assertTrue(hue in 0f..1f)
+            val hue: Float = generator.computeHueInternal(randomBytes)
+            assertTrue(hue in 0f..1f)
+        }
+
+        it("should return 0 as a floating point when bytes are all zero") {
+            val bytes = ByteArray(4)
+            val hue = generator.computeHueInternal(bytes)
+            assertEquals(0f, hue, 0.001f)
+        }
+    }
+
+    describe("The default octet selector algorithm") {
+        val generator = IconGenerator()
+
+        it("should always return a value in 0..255") {
+            val bytes = byteArrayOf(-0xf, -0x7, 0x0, 0x7, 0xf)
+            (0..4).forEach { index ->
+                val octet = generator.getOctetInternal(bytes, index)
+                assertTrue(octet in 0..255)
             }
         }
 
-        on("passing the input value 'zero' as a byte array") {
-            val bytes = byteArrayOf(0x0, 0x0, 0x0, 0x0)
-            it("should return 0 as a floating point") {
-                val hue = generator.computeHue(bytes)
 
-            }
-
-        }
     }
 })
 
