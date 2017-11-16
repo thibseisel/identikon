@@ -114,7 +114,7 @@ internal enum class CenterShapes : ShapeDefinition {
                 else -> cell / 4
             }.toFloat()
 
-            renderer.addRectangle(outer, outer, cell - inner, cell - inner - outer)
+            renderer.addRectangle(outer, outer, cell - inner - outer, cell - inner - outer)
         }
     },
 
