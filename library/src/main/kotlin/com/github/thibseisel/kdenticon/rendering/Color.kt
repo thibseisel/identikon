@@ -24,7 +24,7 @@ internal fun colorOf(alpha: Int, red: Int, green: Int, blue: Int): Int =
  * The value for the alpha channel for the color represented by this integer.
  * @receiver a 32-bits integer representing a color in the sRGB space.
  */
-internal val Int.alpha: Int get() = (this shr 24)
+internal val Int.alpha: Int get() = (this ushr 24)
 
 /**
  * The value for the red channel for the color represented by this integer.
