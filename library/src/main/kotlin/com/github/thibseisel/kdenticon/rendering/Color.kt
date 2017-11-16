@@ -46,25 +46,28 @@ internal val Int.blue: Int get() = (this) and 0xff
 
 private fun hueToRgb(m1: Float, m2: Float, h: Float): Int {
     val hh = when {
-        h < 0 -> h + 6
-        h > 6 -> h - 6
+        h < 0 -> h + 6f
+        h > 6 -> h - 6f
         else -> h
     }
 
-    return 255 * (when {
-        hh < 1 -> m1 + (m2 - m1) * hh
-        hh < 3 -> m2
-        hh < 4 -> m1 + (m2 - m1) * (4 - hh)
+    return Math.round(255 * when {
+        hh < 1f -> m1 + (m2 - m1) * hh
+        hh < 3f -> m2
+        hh < 4f -> m1 + (m2 - m1) * (4f - hh)
         else -> m1
-    }).toInt()
+    })
 }
 
 /**
  * Convert a color from the HSL color space to a sRGB color encoded as an integer.
  *
- * @param hue Hue in the range [0, 1]
- * @param saturation Saturation in the range [0, 1]
- * @param lightness Lightness in the range [0, 1]
+ * @param hue Hue normalized in the range `[0, 1]`. 
+ *         0.0 is red, 1/3 is green, 2/3 is blue, 1.0 is also red.
+ * @param saturation Saturation in the range `[0, 1]`, 
+ *         expressed in percent where 0% is achromatic and 100% is full color.
+ * @param lightness Lightness in the range `[0, 1]`
+ *         expressed in percent where 0% is black and 100% is white.
  * @return an ARGB-encoded color integer
  */
 @JvmName("fromHsl")
@@ -75,14 +78,14 @@ internal fun colorFromHsl(hue: Float, saturation: Float, lightness: Float): Int 
 
     return if (saturation == 0f) {
         // No saturation: this is a shape of grey
-        val value = (lightness * 255).toInt()
+        val value = Math.round(lightness * 255)
         colorOf(255, value, value, value)
     } else {
         // Calculate hue values
-        val m2 = if (lightness <= 0.5f) lightness * (saturation + 1)
+        val m2 = if (lightness <= 0.5f) lightness * (saturation + 1f)
         else lightness + saturation - lightness * saturation
 
-        val m1 = lightness * 2 - m2
+        val m1 = lightness * 2f - m2
         colorOf(255,
                 hueToRgb(m1, m2, hue * 6 + 2),
                 hueToRgb(m1, m2, hue * 6),
