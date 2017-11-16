@@ -1,11 +1,18 @@
-package com.github.thibseisel.kdenticon
+package com.github.thibseisel.kdenticon.android
 
 import android.graphics.*
 import com.github.thibseisel.kdenticon.rendering.PointF
 import com.github.thibseisel.kdenticon.rendering.Renderer
 
 /**
- * Renders icons onto a Android bitmap using the framework's Canvas.
+ * Renders an icon onto a Android [Bitmap] using the framework's Canvas.
+ * This renderer implementation make it easy to integrate Kdenticon with Android.
+ *
+ * The resulting bitmap could then be directly displayed in an ImageView or saved as a PNG file
+ * using [Bitmap.compress].
+ *
+ * @constructor Creates a new instance of a renderer that draw the icon on the provided bitmap.
+ * @param bitmap The bitmap on which the icon should be drawn.
  */
 class AndroidBitmapRenderer(bitmap: Bitmap) : Renderer() {
 
