@@ -1,9 +1,7 @@
 package com.github.thibseisel.kdenticon
 
-import com.github.thibseisel.kdenticon.rendering.IconGenerator
-import com.github.thibseisel.kdenticon.rendering.PngRenderer
-import com.github.thibseisel.kdenticon.rendering.Rectangle
-import com.github.thibseisel.kdenticon.rendering.Renderer
+import com.github.thibseisel.kdenticon.rendering.*
+import java.io.File
 import java.io.OutputStream
 import java.security.MessageDigest
 
@@ -60,6 +58,20 @@ class Identicon(val hash: ByteArray, val size: Int) {
         val iconBounds = this.getIconBounds()
         this.draw(renderer, iconBounds)
         renderer.savePng(stream)
+    }
+
+    fun saveAsSvg(filepath: String) {
+        File(filepath).outputStream().use {
+            saveAsSvg(it)
+        }
+    }
+
+    fun saveAsSvg(stream: OutputStream) {
+        val renderer = SvgRenderer(size, size)
+        draw(renderer, getIconBounds())
+        stream.bufferedWriter().use {
+            renderer.save(it, false)
+        }
     }
 
     companion object {
