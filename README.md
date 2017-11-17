@@ -25,8 +25,8 @@ You may also use those icons in any other context, for example as a placeholder 
 ## Project status
 
 Kdenticon is still in active development.
-While the icon generation API is functional, the only way to display and save icons into file is
-to use the [Android extension](kdenticon-android).
+While the icon generation API is functional, at the moment it is only possible to save icons as SVG files.
+You can also use the [Kdenticon-Android extension](kdenticon-android).
 
 ## Setup
 
@@ -35,7 +35,7 @@ Add the following dependency to your Gradle build script :
 
 ```gradle
 dependencies {
-    implementation 'com.github.thibseisel:kdenticon:1.0.0-alpha1'
+    implementation 'com.github.thibseisel:kdenticon:1.0.0-alpha2'
 }
 ```
 
@@ -46,7 +46,28 @@ will be used to generate the icon.
 
 Identicons are drawn by an implementation of the `Renderer` class. It should delegates shape drawing 
 to any kind of surface : directly onto a Swing window, into a PNG file or a network connection, etc.
-For the time being, you have to define your own as no built-in Renderer is available.
+For the time being, the only built-in `Renderer` implementation is `SvgRenderer`, 
+that saves generated icons to SVG files.
+
+For any other use-case, you have to define your own Renderer subclass.
+
+### Writing icon to a SVG file
+
+```java
+public class Main {
+    
+    public static void main(String[] args){
+        // Create a new instance of the Identicon class with an hash string and the given size
+        int iconSize = 300;
+        Identicon icon = Identicon.fromValue("Hello World!", iconSize);
+        
+        // Creates a new file with the given name
+        icon.saveAsSvg("kdenticon.svg");
+    }
+}
+```
+
+### With your own Renderer subclass
 
 ```java
 public class Main {
@@ -57,8 +78,9 @@ public class Main {
         Identicon icon = Identicon.fromValue("Hello World!", iconSize);
         
         // Instantiate your own Renderer implementation
-        // PngRenderer and SvgRenderer will be available in the future
         Renderer renderer = new MyRenderer();
+        
+        // Start the rendering
         icon.draw(renderer, icon.getIconBounds());
     }
 }
