@@ -48,27 +48,44 @@ class SvgRenderer(
         // Add SVG root element tag if requested
         if (!partial) {
             writer.write("""
-                <svg xmlns="http://www.w3.org/2000/svg" width="$width" height="$height"
-                viewBox="0 0 $width $height" preserveAspectRatio="xMidYMid meet">
-                """.trimIndent())
+                |<svg xmlns="http://www.w3.org/2000/svg"
+                |    width="$width"
+                |    height="$height"
+                |    viewBox="0 0 $width $height"
+                |    preserveAspectRatio="xMidYMid meet">
+                """.trimMargin())
         }
 
         // Draw the background only if it is not transparent
         if (backgroundColor.alpha > 0) {
             val opacity = backgroundColor.alpha / 255f
+
+            writer.write("\n")
+
             writer.write("""
-                <rect fill="${backgroundColor.toColorString()}" fill-opacity="$opacity"
-                x="0" y="0" width="$width" height="$height" />
-            """.trimIndent())
+                |   <rect
+                |       fill="${backgroundColor.toRgbString()}"
+                |       fill-opacity="$opacity"
+                |       x="0"
+                |       y="0"
+                |       width="$width"
+                |       height="$height" />
+            """.trimMargin())
         }
 
         // Define each shape as an SVG path
-        for (path in pathsByColor.values) {
-            writer.write("""<path fill="${backgroundColor.toColorString()}" d="$path" />""")
+        for ((color, path) in pathsByColor) {
+            writer.write("\n")
+            writer.write("""
+                |   <path
+                |       fill="${color.toRgbString()}"
+                |       d="$path" />
+                """.trimMargin())
         }
 
         // Close the SVG root element if requested
         if (!partial) {
+            writer.write("\n")
             writer.write("</svg>")
         }
     }

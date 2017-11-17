@@ -1,1 +1,1 @@
-include ':kdenticon-android', ':library', ':demo'
+include ':kdenticon-android', ':kdenticon', ':demo'

@@ -1,11 +1,10 @@
 ext {
     groupId = "com.github.thibseisel"
     artifactId = "kdenticon"
-    libVersion = "1.0.0-alpha1"
-    versionDescription = "KDenticon alpha 1"
 }
 
 group groupId
+artifactId = artifactId
 version libVersion
 
 buildscript {
@@ -72,7 +71,6 @@ bintray {
 
         version {
             name = libVersion
-            description = versionDescription
             released = new Date()
         }
     }
