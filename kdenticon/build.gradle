@@ -8,16 +8,12 @@ artifactId = artifactId
 version libVersion
 
 buildscript {
-    ext.bintray_version = '1.8.0'
-    ext.dokka_version = '0.9.15'
     ext.junit_platform_version = '1.0.0'
 
     repositories {
         jcenter()
     }
     dependencies {
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${bintray_version}"
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokka_version}"
         classpath "org.junit.platform:junit-platform-gradle-plugin:${junit_platform_version}"
     }
 }
@@ -29,7 +25,6 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka'
 apply plugin: 'org.junit.platform.gradle.plugin'
-apply from: '../bintray.gradle'
 
 junitPlatform {
     filters {
@@ -59,8 +54,8 @@ dependencies {
 }
 
 bintray {
-    user = bintray_user
-    key = bintray_apikey
+    user = project.property('bintray.user')
+    key = project.property('bintray.apikey')
     publish = true
     override = true
 

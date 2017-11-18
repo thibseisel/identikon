@@ -7,3 +7,6 @@
 /build
 /captures
 .externalNativeBuild
+
+# Prevent from publishing Bintray Jcenter credentials
+gradle.properties
