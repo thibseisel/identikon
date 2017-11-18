@@ -1,6 +1,6 @@
 [ ![JCenter](https://api.bintray.com/packages/nihilus/maven/kdenticon/images/download.svg) ](https://bintray.com/nihilus/maven/kdenticon/_latestVersion)
 
-# KDenticon
+# Kdenticon
 
 KDenticon is a Java library for generating highly recognizable identicons.
 Written in Kotlin, it is a port of [Jdenticon](https://github.com/dmester/jdenticon) to the JVM platform.
@@ -56,7 +56,7 @@ For any other use-case, you have to define your own Renderer subclass.
 ```java
 public class Main {
     
-    public static void main(String[] args){
+    public static void main(String[] args) {
         // Create a new instance of the Identicon class with an hash string and the given size
         int iconSize = 300;
         Identicon icon = Identicon.fromValue("Hello World!", iconSize);
@@ -72,7 +72,7 @@ public class Main {
 ```java
 public class Main {
     
-    public static void main(String[] args){
+    public static void main(String[] args) {
         // Create a new instance of the Identicon class with an hash string and the given size
         int iconSize = 300;
         Identicon icon = Identicon.fromValue("Hello World!", iconSize);

@@ -11,7 +11,7 @@ Add the following to your `build.gradle` script :
 
 ```gradle
 dependencies {
-    implementation 'com.github.thibseisel:kdenticon-android:1.0.0-alpha1'
+    implementation 'com.github.thibseisel:kdenticon-android:1.0.0-alpha2'
 }
 ```
 
@@ -20,12 +20,12 @@ as it is provided with Kdenticon-Android.
 
 ## How to use
 
-Follow the steps described in [Kdenticon's README](../).
-Then, instead of using a built-in `Renderer` implementation, create an instance of `AndroidBitmapRenderer`.
+Kdenticon-Android provides its own Renderer implementation tailored for Android, 
+`AndroidBitmapRenderer`. It also provides an utility function that makes it easier to use :
 
 ```java
 import com.github.thibseisel.kdenticon.Identicon;
-import com.github.thibseisel.kdenticon.android.AndroidBitmapRenderer;
+import com.github.thibseisel.kdenticon.android.KdenticonAndroid;
 import android.graphics.Bitmap;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,16 +34,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        Identicon icon = com.github.thibseisel.kdenticon.Identicon.fromValue("Hello World!", 300);
+        // Create an icon of the desired size and hash string
+        Identicon icon = Identicon.fromValue("Hello World!", 300);
+        
+        // Create a bitmap of the same size onto the icon should be drawn
         Bitmap bitmap = Bitmap.createBitmap(300, 300, Bitmap.Config.ARGB_8888);
         
-        Renderer renderer = new AndroidBitmapRenderer(bitmap);
-        icon.draw(renderer, icon.getIconBounds());
+        // Utility function that uses AndroidBitmapRenderer behind the scene to draw onto bitmap
+        KdenticonAndroid.drawIconToBitmap(icon, bitmap);
         
         // The icon has been drawn onto the Bitmap
         // Do what you want with it !
         imageView.setImageBitmap(bitmap);
     }
+}
+```
+
+If you use Kotlin, you can do the same thing with an extension function of `Identicon` :
+
+```kotlin
+fun onCreate(savedInstanceState: Bundle?) {
+    // ...
+    icon.drawToBitmap(bitmap)
+    // ...
 }
 ```
 
