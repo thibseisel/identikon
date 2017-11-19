@@ -1,3 +1,5 @@
+[ ![JCenter](https://api.bintray.com/packages/nihilus/android/kdenticon-android/images/download.svg) ](https://bintray.com/nihilus/android/kdenticon-android/_latestVersion)
+
 # Kdenticon-Android
 
 Kdenticon-Android makes it easier to use the Kdenticon library on Android.
