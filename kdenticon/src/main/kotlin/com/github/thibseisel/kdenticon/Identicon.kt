@@ -26,9 +26,9 @@ class Identicon(val hash: ByteArray, val size: Int) {
      * The style for this icon.
      * This dictates what kind of colors use when generating this icon.
      *
-     * This will be initialized to the default style.
+     * This is initialized to the [default style][IdenticonStyle.DEFAULT_STYLE].
      */
-    var style = IdenticonStyle()
+    var style = IdenticonStyle.DEFAULT_STYLE
 
     /**
      * Draws this icon using the specified renderer.

@@ -13,16 +13,15 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.github.thibseisel.kdenticon.android.AndroidBitmapRenderer
 import com.github.thibseisel.kdenticon.Identicon
 import com.github.thibseisel.kdenticon.IdenticonStyle
+import com.github.thibseisel.kdenticon.android.AndroidBitmapRenderer
 import com.github.thibseisel.kdenticon.rendering.Renderer
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
-import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -31,9 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var iconBitmap: Bitmap
     private lateinit var canvasRenderer: Renderer
     private var subscriptionPool = CompositeDisposable()
-    private var iconStyle = IdenticonStyle().apply {
-        backgroundColor = Color.TRANSPARENT
-    }
+    private var iconStyle = IdenticonStyle(backgroundColor = Color.TRANSPARENT)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
