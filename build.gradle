@@ -1,20 +1,32 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = '1.1.60'
-    ext.bintray_version = '1.8.0'
-    ext.dokka_version = '0.9.15'
+    ext {
+        android_gradle_version = '3.0.0'
+        kotlin_version = '1.1.60'
+        junit_platform_version = '1.0.0'
+        dokka_version = '0.9.15'
+        bintray_version = '1.8.0'
+        android_maven_version = '2.0'
+    }
+
     repositories {
         google()
         jcenter()
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${bintray_version}"
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokka_version}"
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+    dependencies {
+        // Android Gradle Build tools
+        classpath "com.android.tools.build:gradle:${android_gradle_version}"
+        // Performs compilation of Kotlin projects
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
+        // Testing platform executing Spek unit tests with JUnit
+        classpath "org.junit.platform:junit-platform-gradle-plugin:${junit_platform_version}"
+        // KDoc documentation tags interpreter
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokka_version}"
+        // Allows distribution of libraries to Bintray (Jcenter)
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${bintray_version}"
+        // Maven plugin compatible with android library projects
+        classpath "com.github.dcendents:android-maven-gradle-plugin:${android_maven_version}"
     }
 }
 
@@ -30,6 +42,7 @@ task clean(type: Delete) {
 }
 
 ext {
+    libGroup = 'com.github.thibseisel'
     libVersion = '1.0.0-alpha2'
 
     junit_version = '4.12'

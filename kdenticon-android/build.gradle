@@ -1,12 +1,3 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-    }
-}
-
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.jfrog.bintray'
@@ -15,8 +6,8 @@ apply plugin: 'org.jetbrains.dokka'
 
 String libraryName = 'kdenticon-android'
 
-group = 'com.github.thibseisel'
-version = libVersion
+group = rootProject.libGroup
+version = rootProject.libVersion
 
 // Specify the artifactId of the library
 project.archivesBaseName = libraryName
@@ -53,9 +44,9 @@ install {
             inceptionYear '2017'
 
             packaging 'aar'
-            groupId 'com.github.thibseisel'
+            groupId rootProject.libGroup
             artifactId libraryName
-            version libVersion
+            version rootProject.libVersion
 
             licenses {
                 license {
@@ -82,6 +73,7 @@ bintray {
     user = project.property('bintray.user')
     key = project.property('bintray.apikey')
     configurations = ['archives']
+
     pkg {
         repo = 'android'
         name = 'kdenticon-android'
@@ -89,28 +81,32 @@ bintray {
         override = true
 
         version {
-            name = libVersion
-            desc = 'Alpha 2'
+            name = rootProject.libVersion
+            released = new Date()
         }
     }
 }
 
+// Creates a Jar containing source code to help debugging
 task sourcesJar(type: Jar) {
     classifier = 'sources'
     from android.sourceSets.main.java.srcDirs
 }
 
+// Creates javadoc from KDoc tags
 task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
     outputFormat = 'javadoc'
     outputDirectory = "$buildDir/javadoc"
     reportNotDocumented = false
 }
 
+// Creates a Jar containing javadoc. Happens after dokkaJavadoc task.
 task javadocJar(type: Jar, dependsOn: 'dokkaJavadoc') {
     classifier = 'javadoc'
     from fileTree(new File(project.buildDir, 'javadoc'))
 }
 
+// Adds Javadoc and sources to Maven artifacts
 artifacts {
     archives javadocJar
     archives sourcesJar

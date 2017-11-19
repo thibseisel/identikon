@@ -1,29 +1,9 @@
-ext {
-    groupId = "com.github.thibseisel"
-    artifactId = "kdenticon"
-}
-
-group groupId
-artifactId = artifactId
-version libVersion
-
-buildscript {
-    ext.junit_platform_version = '1.0.0'
-
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "org.junit.platform:junit-platform-gradle-plugin:${junit_platform_version}"
-    }
-}
-
+apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'java-library'
-apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven'
-apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'com.jfrog.bintray'
 apply plugin: 'org.junit.platform.gradle.plugin'
 
 junitPlatform {
@@ -32,10 +12,6 @@ junitPlatform {
             include 'spek'
         }
     }
-}
-
-repositories {
-    jcenter()
 }
 
 dependencies {
@@ -53,52 +29,83 @@ dependencies {
     }
 }
 
+String libraryName = 'kdenticon'
+
+group rootProject.libGroup
+version rootProject.libVersion
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name libraryName
+            description 'A library for generating highly recognizable identicons for the JVM platform.'
+            url 'https://github.com/thibseisel/Kdenticon'
+            inceptionYear '2017'
+
+            packaging 'jar'
+            groupId rootProject.libGroup
+            artifactId libraryName
+            version rootProject.libVersion
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                connection 'https://github.com/thibseisel/Kdenticon.git'
+                url 'https://github.com/thibseisel/Kdenticon'
+            }
+
+            developers {
+                developer {
+                    name 'Thibault Seisel'
+                }
+            }
+        }
+    }
+}
+
 bintray {
     user = project.property('bintray.user')
     key = project.property('bintray.apikey')
-    publish = true
-    override = true
+    configurations = ['archives']
 
     pkg {
         repo = 'maven'
-        name = artifactId
-        configurations = ['archives']
+        name = 'kdenticon'
+        publish = true
+        override = true
 
         version {
-            name = libVersion
+            name = rootProject.libVersion
             released = new Date()
         }
     }
 }
 
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            packaging 'jar'
-            groupId groupId
-            artifactId artifactId
-            version libVersion
-            name artifactId
-        }
-    }
-}
-
+// Creates a Jar containing source code to help debugging
 task sourcesJar(type: Jar) {
     classifier = 'sources'
-    from sourceSets.main.kotlin.srcDirs
+    from sourceSets.main.java.srcDirs
 }
 
+// Creates javadoc from KDoc tags
 task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
     outputFormat = 'javadoc'
     outputDirectory = "$buildDir/javadoc"
     reportNotDocumented = false
 }
 
+// Creates a Jar containing javadoc. Happens after dokkaJavadoc task.
 task javadocJar(type: Jar, dependsOn: 'dokkaJavadoc') {
     classifier = 'javadoc'
     from fileTree(new File(project.buildDir, 'javadoc'))
 }
 
+// Adds Javadoc and sources to Maven artifacts
 artifacts {
     archives javadocJar
     archives sourcesJar
