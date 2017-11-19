@@ -1,6 +1,10 @@
 package com.github.thibseisel.kdenticon.rendering
 
-internal object TriangleDirection {
+/**
+ * Defines the direction in which the 90° angle of a triangle points to.
+ * All rectangles in Kdenticon default shapes are right.
+ */
+object TriangleDirection {
     /**
      * The 90 degree angle is pointing to South West.
      */

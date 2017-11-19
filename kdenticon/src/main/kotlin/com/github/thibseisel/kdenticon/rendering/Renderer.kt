@@ -4,11 +4,11 @@ import com.github.thibseisel.kdenticon.Identicon
 
 /**
  * Base class for rendering shapes in an identicon.
- * This class acts as a proxy to delegate instructions to draw shapes onto any kind of surface or data streams.
- * For example, the [PngRenderer] implementation directly draws pixels onto a Bitmap to be saved as a PNG file.
+ * This class acts as a proxy to delegate instructions to draw shapes onto any kind of surface
+ * or data streams. For example, the [PngRenderer] implementation directly draws pixels onto a Bitmap.
  *
- * You may extend this class, for example, to support a new file format that is not natively supported by KDenticon
- * or directly draw the icon onto a surface.
+ * You may extend this class, for example, to support a new file format that is not natively
+ * supported by Kdenticon or directly draw the icon onto a surface.
  *
  * To use your own implementation of a renderer, pass it as an argument to the [Identicon.draw] method.
  *
@@ -18,14 +18,15 @@ import com.github.thibseisel.kdenticon.Identicon
 abstract class Renderer {
 
     /**
-     * The current transform that will be applied on all coordinates before being rendered in the target image.
+     * The current transform that will be applied on all coordinates before being rendered
+     * in the target image.
      */
     internal var transform: Transform = Transform.EMPTY
 
     /**
      * Adds a polygon without translating or changing direction of the points.
      *
-     * @param points The coordinates of the points the polygon consists of
+     * @param points The coordinates of the points the polygon consists of.
      */
     protected abstract fun addPolygonNoTransform(points: Array<PointF>)
 
@@ -136,8 +137,8 @@ abstract class Renderer {
      * @param y Y-coordinate of the top-left vertex of the bounding rectangle.
      * @param width Width of the bounding rectangle.
      * @param height Height of the bounding rectangle.
-     * @param direction A constant from [TriangleDirection]
-     * indicating in which vertex of the bounding rectangle this triangle points.
+     * @param direction The direction in which the 90° angle of this triangle points to,
+     * as defined by [TriangleDirection].
      * @param invert If `true` the area of the triangle will be removed from the filled area.
      */
     fun addTriangle(x: Float, y: Float, width: Float, height: Float, direction: Int, invert: Boolean = false) {

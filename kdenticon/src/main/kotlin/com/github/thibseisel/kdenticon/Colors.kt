@@ -2,6 +2,7 @@ package com.github.thibseisel.kdenticon
 
 /**
  * A collection of built-in colors.
+ * All colors are defined as sRGB 32 bits integers, in the form `#AARRGGBB`.
  */
 @Suppress("unused")
 object Colors {

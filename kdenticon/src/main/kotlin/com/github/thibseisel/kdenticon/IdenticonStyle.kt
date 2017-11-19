@@ -12,7 +12,7 @@ class IdenticonStyle(
 
         /**
          * The background color of the icon.
-         * Set to [Colors.TRANSPARENT] to remove the background.
+         * Set to `0` (`0x00000000`) to remove the background.
          *
          * The default background color is white.
          */
