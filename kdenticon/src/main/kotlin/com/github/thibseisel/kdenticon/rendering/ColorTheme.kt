@@ -1,5 +1,6 @@
 package com.github.thibseisel.kdenticon.rendering
 
+import com.github.thibseisel.kdenticon.Identicon
 import com.github.thibseisel.kdenticon.IdenticonStyle
 
 /**
@@ -9,9 +10,11 @@ import com.github.thibseisel.kdenticon.IdenticonStyle
  *
  * @constructor Create a new ColorTheme based on the provided color hue and the given style.
  *
- * @param hue The color hue that will be used to calculate the base color and its variants, must be in `[0.0, 1.0]`.
+ * @param hue The color hue that will be used to calculate the base color and its variants,
+ * must be in `[0.0, 1.0]`.
  * @param style The style of the icon that will be associated to this theme.
  */
+@Suppress("MemberVisibilityCanPrivate")
 class ColorTheme(hue: Float, style: IdenticonStyle) {
 
     init {
@@ -21,28 +24,28 @@ class ColorTheme(hue: Float, style: IdenticonStyle) {
     /**
      * The base color to use for this theme.
      */
-    var color: Int = colorFromHslCompensated(hue, style.saturation,
+    val color: Int = colorFromHslCompensated(hue, style.saturation,
             (style.colorLightness.start + style.colorLightness.endInclusive) / 2)
 
     /**
      * The light color variant for this theme.
      */
-    var lightColor: Int = colorFromHslCompensated(hue, style.saturation, style.colorLightness.endInclusive)
+    val lightColor: Int = colorFromHslCompensated(hue, style.saturation, style.colorLightness.endInclusive)
 
     /**
      * The dark color variant for this theme.
      */
-    var darkColor: Int = colorFromHslCompensated(hue, style.saturation, style.colorLightness.endInclusive)
+    val darkColor: Int = colorFromHslCompensated(hue, style.saturation, style.colorLightness.endInclusive)
 
     /**
      * The light shade of gray for this theme.
      */
-    var lightGray: Int = colorFromHsl(0f, 0f, style.grayScaleLightness.endInclusive)
+    val lightGray: Int = colorFromHsl(0f, 0f, style.grayScaleLightness.endInclusive)
 
     /**
      * The dark shade of gray for this theme.
      */
-    var darkGray: Int = colorFromHsl(0f, 0f, style.grayScaleLightness.start)
+    val darkGray: Int = colorFromHsl(0f, 0f, style.grayScaleLightness.start)
 
     /**
      * The total number of colors that this theme features.
