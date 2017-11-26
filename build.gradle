@@ -18,7 +18,7 @@
 buildscript {
     ext {
         android_gradle_version = '3.0.0'
-        kotlin_version = '1.1.60'
+        kotlin_version = '1.1.61'
         junit_platform_version = '1.0.0'
         dokka_version = '0.9.15'
         bintray_version = '1.8.0'
@@ -32,7 +32,7 @@ buildscript {
 
     dependencies {
         // Android Gradle Build tools
-        classpath "com.android.tools.build:gradle:${android_gradle_version}"
+        classpath 'com.android.tools.build:gradle:3.0.1'
         // Performs compilation of Kotlin projects
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
         // Testing platform executing Spek unit tests with JUnit
