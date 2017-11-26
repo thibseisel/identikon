@@ -59,7 +59,7 @@ task clean(type: Delete) {
 
 ext {
     libGroup = 'com.github.thibseisel'
-    libVersion = '1.0.0-alpha3'
+    libVersion = '1.0.0-alpha4'
 
     junit_version = '4.12'
     spek_version = '1.1.5'

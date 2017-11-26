@@ -35,7 +35,7 @@ Add the following dependency to your Gradle build script :
 
 ```gradle
 dependencies {
-    implementation 'com.github.thibseisel:kdenticon:1.0.0-alpha3'
+    implementation 'com.github.thibseisel:kdenticon:1.0.0-alpha4'
 }
 ```
 

@@ -13,7 +13,7 @@ Add the following to your `build.gradle` script :
 
 ```gradle
 dependencies {
-    implementation 'com.github.thibseisel:kdenticon-android:1.0.0-alpha3'
+    implementation 'com.github.thibseisel:kdenticon-android:1.0.0-alpha4'
 }
 ```
 
