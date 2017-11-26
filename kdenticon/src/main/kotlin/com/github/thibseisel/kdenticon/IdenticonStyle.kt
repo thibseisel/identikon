@@ -79,6 +79,27 @@ class IdenticonStyle(
     }
 
     companion object {
+
+        /**
+         * The default value for [padding].
+         */
+        const val DEFAULT_PADDING = 0.08f
+
+        /**
+         * The default value for [saturation].
+         */
+        const val DEFAULT_SATURATION = 0.5f
+
+        /**
+         * The default range for [grayScaleLightness].
+         */
+        @JvmField val DEFAULT_GRAY_SCALE_LIGHTNESS = (0.3f..0.9f)
+
+        /**
+         * The default range for [colorLightness].
+         */
+        @JvmField val DEFAULT_COLOR_LIGHTNESS = (0.4f..0.8f)
+
         /**
          * The default style used for all icons. Icons using this style have :
          *
@@ -89,11 +110,6 @@ class IdenticonStyle(
          * - gray scale lightness picked in `[0.3, 0.9]`.
          */
         @JvmField val DEFAULT_STYLE = IdenticonStyle()
-        @JvmField val DEFAULT_COLOR_LIGHTNESS = (0.4f..0.8f)
-        @JvmField val DEFAULT_GRAY_SCALE_LIGHTNESS = (0.3f..0.9f)
-
-        const val DEFAULT_PADDING = 0.08f
-        const val DEFAULT_SATURATION = 0.5f
 
         /**
          * Helper function for Java to create ranges of floating point numbers.
