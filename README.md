@@ -35,7 +35,7 @@ Add the following dependency to your Gradle build script :
 
 ```gradle
 dependencies {
-    implementation 'com.github.thibseisel:kdenticon:1.0.0-alpha2'
+    implementation 'com.github.thibseisel:kdenticon:1.0.0-alpha3'
 }
 ```
 
@@ -88,5 +88,7 @@ public class Main {
 
 ## Note about the author
 
-I do not own the original idea. If you like the look of the icons, consider leaving a tip to the original author,
+Even if I did all the work of translating from JavaScript / C# to Kotlin, 
+the algorithm used to generate icons and their look is not my own work. 
+If you like the look of the icons, consider leaving a tip to the original author,
 [Daniel Mester Pirttijärvi](https://github.com/dmester).
