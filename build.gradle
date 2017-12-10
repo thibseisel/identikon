@@ -18,7 +18,7 @@
 buildscript {
     ext {
         android_gradle_version = '3.0.0'
-        kotlin_version = '1.1.61'
+        kotlin_version = '1.2.0'
         junit_platform_version = '1.0.0'
         dokka_version = '0.9.15'
         bintray_version = '1.8.0'
