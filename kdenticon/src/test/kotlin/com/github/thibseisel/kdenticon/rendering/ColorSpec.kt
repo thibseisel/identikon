@@ -16,17 +16,14 @@
 
 package com.github.thibseisel.kdenticon.rendering
 
-import com.github.thibseisel.kdenticon.assertFailsWith
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import io.kotest.core.spec.style.DescribeSpec
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 /**
  * Specifications for helper functions that manipulates colors.
  */
-class ColorSpec : Spek({
+internal class ColorSpec : DescribeSpec({
 
     describe("The sRGB color encoding algorithm") {
 
@@ -101,8 +98,8 @@ class ColorSpec : Spek({
         it("should return a shade of grey if saturation is 0") {
             // Shades of grey have the same value for each color channel
             val color = colorFromHsl(0.67f, 0f, 0.88f)
-            assertTrue(color.red == color.green)
-            assertTrue(color.green == color.blue)
+            assertEquals(color.red, color.green)
+            assertEquals(color.green, color.blue)
             // Implicit equality between red and blue channel values
         }
 

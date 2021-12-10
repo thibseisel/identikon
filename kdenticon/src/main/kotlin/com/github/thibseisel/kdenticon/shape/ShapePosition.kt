@@ -19,25 +19,26 @@ package com.github.thibseisel.kdenticon.shape
 /**
  * Specifies in which cell a shape will be rendered.
  */
-class ShapePosition(
-        /**
-         * The x-coordinate of the containing cell.
-         */
-        val x: Int,
-        /**
-         * The y-coordinate of the containing cell.
-         */
-        val y: Int) {
+public class ShapePosition(
+    /**
+     * The x-coordinate of the containing cell.
+     */
+    public val x: Int,
+    /**
+     * The y-coordinate of the containing cell.
+     */
+    public val y: Int,
+) {
 
     /**
      * The x-coordinate of the containing cell.
      */
-    operator fun component1() = x
+    public operator fun component1(): Int = x
 
     /**
      * The y-coordinate of the containing cell.
      */
-    operator fun component2() = y
+    public operator fun component2(): Int = y
 
     /**
      * Returns a hash code value for the object.
@@ -63,7 +64,7 @@ class ShapePosition(
     /**
      * Returns a string representation of this shape position.
      */
-    override fun toString() = "{$x, $y}"
+    override fun toString(): String = "{$x, $y}"
 }
 
 /**

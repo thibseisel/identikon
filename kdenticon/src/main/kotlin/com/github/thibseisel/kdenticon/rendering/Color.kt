@@ -18,6 +18,8 @@
 
 package com.github.thibseisel.kdenticon.rendering
 
+import kotlin.math.roundToInt
+
 /**
  * Create the representation of a color in the sRGB color space as a 32-bits integer.
  *
@@ -31,10 +33,10 @@ package com.github.thibseisel.kdenticon.rendering
  */
 @JvmName("fromArgb")
 internal fun colorOf(alpha: Int, red: Int, green: Int, blue: Int): Int =
-        (alpha and 0xff shl 24) or
-                (red and 0xff shl 16) or
-                (green and 0xff shl 8) or
-                (blue and 0xff)
+    (alpha and 0xff shl 24) or
+            (red and 0xff shl 16) or
+            (green and 0xff shl 8) or
+            (blue and 0xff)
 
 /**
  * The value for the alpha channel for the color represented by this integer.
@@ -67,20 +69,20 @@ private fun hueToRgb(m1: Float, m2: Float, h: Float): Int {
         else -> h
     }
 
-    return Math.round(255 * when {
+    return (255 * when {
         hh < 1f -> m1 + (m2 - m1) * hh
         hh < 3f -> m2
         hh < 4f -> m1 + (m2 - m1) * (4f - hh)
         else -> m1
-    })
+    }).roundToInt()
 }
 
 /**
  * Convert a color from the HSL color space to a sRGB color encoded as an integer.
  *
- * @param hue Hue normalized in the range `[0, 1]`. 
+ * @param hue Hue normalized in the range `[0, 1]`.
  *         0.0 is red, 1/3 is green, 2/3 is blue, 1.0 is also red.
- * @param saturation Saturation in the range `[0, 1]`, 
+ * @param saturation Saturation in the range `[0, 1]`,
  *         expressed in percent where 0% is achromatic and 100% is full color.
  * @param lightness Lightness in the range `[0, 1]`
  *         expressed in percent where 0% is black and 100% is white.
@@ -88,13 +90,13 @@ private fun hueToRgb(m1: Float, m2: Float, h: Float): Int {
  */
 @JvmName("fromHsl")
 internal fun colorFromHsl(hue: Float, saturation: Float, lightness: Float): Int {
-    require(hue in 0.0f .. 1.0f) { "Hue should be in [0, 1]" }
-    require(saturation in 0.0f .. 1.0f) { "Saturation should be in [0, 1]" }
-    require(lightness in 0.0f .. 1.0f) { "Lightness should be in [0, 1]" }
+    require(hue in 0.0f..1.0f) { "Hue should be in [0, 1]" }
+    require(saturation in 0.0f..1.0f) { "Saturation should be in [0, 1]" }
+    require(lightness in 0.0f..1.0f) { "Lightness should be in [0, 1]" }
 
     return if (saturation == 0f) {
         // No saturation: this is a shape of grey
-        val value = Math.round(lightness * 255)
+        val value = (lightness * 255).roundToInt()
         colorOf(255, value, value, value)
     } else {
         // Calculate hue values
@@ -102,10 +104,12 @@ internal fun colorFromHsl(hue: Float, saturation: Float, lightness: Float): Int 
         else lightness + saturation - lightness * saturation
 
         val m1 = lightness * 2f - m2
-        colorOf(255,
-                hueToRgb(m1, m2, hue * 6 + 2),
-                hueToRgb(m1, m2, hue * 6),
-                hueToRgb(m1, m2, hue * 6 - 2))
+        colorOf(
+            255,
+            hueToRgb(m1, m2, hue * 6 + 2),
+            hueToRgb(m1, m2, hue * 6),
+            hueToRgb(m1, m2, hue * 6 - 2)
+        )
     }
 }
 
@@ -152,7 +156,7 @@ private val lightnessCompensations = floatArrayOf(0.55f, 0.5f, 0.5f, 0.46f, 0.6f
  */
 @JvmName("fromHslCompensated")
 internal fun colorFromHslCompensated(hue: Float, saturation: Float, lightness: Float): Int {
-    require(hue in 0f .. 1f) { "Hue should be in [0, 1]" }
+    require(hue in 0f..1f) { "Hue should be in [0, 1]" }
 
     val lightnessCompensation = lightnessCompensations[(hue * 6 + 0.5f).toInt()]
 

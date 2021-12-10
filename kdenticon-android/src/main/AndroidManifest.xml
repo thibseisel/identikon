@@ -15,5 +15,6 @@
   -->
 
 <manifest package="com.github.thibseisel.kdenticon.android">
+
     <application />
 </manifest>

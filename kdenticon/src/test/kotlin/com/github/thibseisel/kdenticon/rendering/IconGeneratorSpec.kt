@@ -16,15 +16,13 @@
 
 package com.github.thibseisel.kdenticon.rendering
 
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import io.kotest.core.spec.style.DescribeSpec
 import java.nio.ByteBuffer
-import java.util.*
+import kotlin.random.Random
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
-object IconGeneratorSpec : Spek({
+internal class IconGeneratorSpec : DescribeSpec({
 
     describe("The default hue generation algorithm") {
         val generator = IconGenerator()
@@ -52,13 +50,11 @@ object IconGeneratorSpec : Spek({
                 assertTrue(octet in 0..255)
             }
         }
-
-
     }
 })
 
-fun generateRandomBytes(): ByteArray {
-    val randomLong = Random().nextLong()
+private fun generateRandomBytes(): ByteArray {
+    val randomLong = Random.nextLong()
     val buffer = ByteBuffer.allocate(8)
     buffer.putLong(randomLong)
     return buffer.array()

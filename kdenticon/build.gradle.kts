@@ -13,10 +13,29 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-package com.github.thibseisel.kdenticon.draw.raster
+plugins {
+    kotlin("jvm")
+}
 
-/**
- * Specifies an intersection of a super sampled scanline and an edge.
- */
-internal class Intersection(val edge: Edge, val x: Float)
+dependencies {
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotest.runner)
+    testImplementation(libs.kotest.assertions)
+}
+
+kotlin {
+    explicitApi()
+}
+
+tasks.withType<KotlinCompile> {
+    this.kotlinOptions {
+        jvmTarget = "11"
+        freeCompilerArgs = freeCompilerArgs + "-progressive"
+    }
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+}

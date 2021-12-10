@@ -16,7 +16,10 @@
 
 package com.github.thibseisel.kdenticon.android
 
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Path
 import com.github.thibseisel.kdenticon.rendering.PointF
 import com.github.thibseisel.kdenticon.rendering.Renderer
 
@@ -31,7 +34,6 @@ import com.github.thibseisel.kdenticon.rendering.Renderer
  * @param bitmap The bitmap on which the icon should be drawn.
  */
 class AndroidBitmapRenderer(bitmap: Bitmap) : Renderer() {
-
     private val canvas = Canvas(bitmap)
     private val path = Path()
     private val paint = Paint().apply {
@@ -51,7 +53,11 @@ class AndroidBitmapRenderer(bitmap: Bitmap) : Renderer() {
 
     }
 
-    override fun addCircleNoTransform(location: PointF, diameter: Float, counterClockwise: Boolean) {
+    override fun addCircleNoTransform(
+        location: PointF,
+        diameter: Float,
+        counterClockwise: Boolean,
+    ) {
         val radius = diameter / 2f
         val cx = location.x + radius
         val cy = location.y + radius
@@ -64,9 +70,9 @@ class AndroidBitmapRenderer(bitmap: Bitmap) : Renderer() {
         canvas.drawColor(color)
     }
 
-    override fun renderShape(color: Int, action: Runnable) {
+    override fun renderShape(color: Int, action: () -> Unit) {
         path.reset()
-        action.run()
+        action()
 
         paint.color = color
         canvas.drawPath(path, paint)

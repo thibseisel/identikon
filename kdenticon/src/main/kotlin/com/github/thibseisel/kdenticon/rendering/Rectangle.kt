@@ -18,14 +18,15 @@ package com.github.thibseisel.kdenticon.rendering
 
 /**
  * Represents a rectangle in the geometric plane.
+ *
+ * @property x The X-coordinate of the left edge of this rectangle.
+ * @property y The Y-coordinate of the top edge of this rectangle.
+ * @property width The width of this rectangle starting from its top-left vertex.
+ * @property height The height of this rectangle starting from its top-left vertex.
  */
-class Rectangle(
-        /** The X-coordinate of the left edge of this rectangle. */
-        val x: Int,
-        /** The Y-coordinate of the top edge of this rectangle. */
-        val y: Int,
-        /** The width of this rectangle starting from its top-left vertex. */
-        val width: Int,
-        /** The height of this rectangle starting from its top-left vertex. */
-        val height: Int
+public class Rectangle(
+    public val x: Int,
+    public val y: Int,
+    public val width: Int,
+    public val height: Int,
 )

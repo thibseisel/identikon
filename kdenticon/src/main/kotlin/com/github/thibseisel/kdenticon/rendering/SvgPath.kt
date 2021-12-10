@@ -23,7 +23,6 @@ package com.github.thibseisel.kdenticon.rendering
  * then call [toString] to obtain it as a string that can be written to a SVG file.
  */
 internal class SvgPath {
-
     private val pathBuilder = StringBuilder()
 
     /**
@@ -38,9 +37,11 @@ internal class SvgPath {
         val sweepFlag = if (counterClockwise) "0" else "1"
         val radius = diameter / 2f
 
-        pathBuilder.append("""M${location.x} ${location.y + radius}
+        pathBuilder.append(
+            """M${location.x} ${location.y + radius}
             a$radius,$radius 0 1, $sweepFlag ${diameter},0
-            a$radius,$radius 0 1, $sweepFlag ${-diameter},0""".trimIndent())
+            a$radius,$radius 0 1, $sweepFlag ${-diameter},0""".trimIndent()
+        )
     }
 
     /**

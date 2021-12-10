@@ -25,43 +25,55 @@ import com.github.thibseisel.kdenticon.rendering.TriangleDirection
  */
 internal enum class OuterShapes : ShapeDefinition {
 
-        /**
-         * An isosceles right triangle that take half the surface of its containing cell.
-         */
-        LARGE_TRIANGLE {
-            override fun render(renderer: Renderer, cell: Int, index: Int) {
-                renderer.addTriangle(0f, 0f, cell.toFloat(), cell.toFloat(), TriangleDirection.SOUTH_WEST)
-            }
-        },
+    /**
+     * An isosceles right triangle that take half the surface of its containing cell.
+     */
+    LARGE_TRIANGLE {
+        override fun render(renderer: Renderer, cell: Int, index: Int) {
+            renderer.addTriangle(
+                0f,
+                0f,
+                cell.toFloat(),
+                cell.toFloat(),
+                TriangleDirection.SOUTH_WEST
+            )
+        }
+    },
 
-        /**
-         * A right rectangle whose height is half its width.
-         */
-        SMALL_TRIANGLE {
-            override fun render(renderer: Renderer, cell: Int, index: Int) {
-                renderer.addTriangle(0f, cell / 2f, cell.toFloat(), cell / 2f, TriangleDirection.SOUTH_WEST)
-            }
-        },
+    /**
+     * A right rectangle whose height is half its width.
+     */
+    SMALL_TRIANGLE {
+        override fun render(renderer: Renderer, cell: Int, index: Int) {
+            renderer.addTriangle(
+                0f,
+                cell / 2f,
+                cell.toFloat(),
+                cell / 2f,
+                TriangleDirection.SOUTH_WEST
+            )
+        }
+    },
 
-        /**
-         * A rhombus that takes half the surface of its containing cell.
-         */
-        RHOMBUS {
-            override fun render(renderer: Renderer, cell: Int, index: Int) {
-                renderer.addRhombus(0f, 0f, cell.toFloat(), cell.toFloat())
-            }
-        },
+    /**
+     * A rhombus that takes half the surface of its containing cell.
+     */
+    RHOMBUS {
+        override fun render(renderer: Renderer, cell: Int, index: Int) {
+            renderer.addRhombus(0f, 0f, cell.toFloat(), cell.toFloat())
+        }
+    },
 
-        /**
-         * A circle centered in its containing cell whose radius is 1/3 of the cell width.
-         */
-        CIRCLE {
-            override fun render(renderer: Renderer, cell: Int, index: Int) {
-                val m = cell / 6f
-                renderer.addCircle(m, m, cell - 2 * m)
-            }
+    /**
+     * A circle centered in its containing cell whose radius is 1/3 of the cell width.
+     */
+    CIRCLE {
+        override fun render(renderer: Renderer, cell: Int, index: Int) {
+            val m = cell / 6f
+            renderer.addCircle(m, m, cell - 2 * m)
         }
     }
+}
 
 /**
  * Default definition for shapes that are placed in the center of the icon.
@@ -80,13 +92,15 @@ internal enum class CenterShapes : ShapeDefinition {
             val fCell = cell.toFloat()
             val k = fCell * 0.42f
 
-            renderer.addPolygon(arrayOf(
+            renderer.addPolygon(
+                arrayOf(
                     PointF(0f, 0f),
                     PointF(fCell, 0f),
                     PointF(fCell, fCell - k * 2),
                     PointF(fCell - k, fCell),
                     PointF(0f, fCell)
-            ))
+                )
+            )
         }
     },
 
@@ -156,11 +170,13 @@ internal enum class CenterShapes : ShapeDefinition {
             val outer = inner * 4
 
             renderer.addRectangle(0f, 0f, cell.toFloat(), cell.toFloat())
-            renderer.addPolygon(arrayOf(
+            renderer.addPolygon(
+                arrayOf(
                     PointF(outer, outer),
                     PointF(cell - inner, outer),
                     PointF(outer + (cell - outer - inner) / 2, cell - inner)
-            ), true)
+                ), true
+            )
         }
     },
 
@@ -170,14 +186,16 @@ internal enum class CenterShapes : ShapeDefinition {
     CROSS {
         override fun render(renderer: Renderer, cell: Int, index: Int) {
             val fCell = cell.toFloat()
-            renderer.addPolygon(arrayOf(
+            renderer.addPolygon(
+                arrayOf(
                     PointF(0f, 0f),
                     PointF(fCell, 0f),
                     PointF(fCell, fCell * 0.7f),
                     PointF(fCell * 0.4f, fCell * 0.4f),
                     PointF(fCell * 0.7f, fCell),
                     PointF(0f, fCell)
-            ))
+                )
+            )
         }
     },
 
@@ -187,8 +205,10 @@ internal enum class CenterShapes : ShapeDefinition {
     RHOMBUS {
         override fun render(renderer: Renderer, cell: Int, index: Int) {
             val fCell = cell.toFloat()
-            renderer.addTriangle(fCell / 2f, fCell / 2f,
-                    fCell / 2f, fCell / 2f, TriangleDirection.SOUTH_EAST)
+            renderer.addTriangle(
+                fCell / 2f, fCell / 2f,
+                fCell / 2f, fCell / 2f, TriangleDirection.SOUTH_EAST
+            )
         }
     },
 
@@ -198,13 +218,15 @@ internal enum class CenterShapes : ShapeDefinition {
     RHOMBUS_INVERSE {
         override fun render(renderer: Renderer, cell: Int, index: Int) {
             val fCell = cell.toFloat()
-            renderer.addPolygon(arrayOf(
+            renderer.addPolygon(
+                arrayOf(
                     PointF(0f, 0f),
                     PointF(fCell, 0f),
                     PointF(fCell, fCell / 2f),
                     PointF(fCell / 2f, fCell),
                     PointF(0f, fCell)
-            ))
+                )
+            )
         }
     },
 
@@ -227,8 +249,10 @@ internal enum class CenterShapes : ShapeDefinition {
             }.toFloat()
 
             renderer.addRectangle(0f, 0f, fCell, fCell)
-            renderer.addRectangle(outer, outer,
-                    cell - outer - inner, cell - outer - inner, true)
+            renderer.addRectangle(
+                outer, outer,
+                cell - outer - inner, cell - outer - inner, true
+            )
         }
     },
 

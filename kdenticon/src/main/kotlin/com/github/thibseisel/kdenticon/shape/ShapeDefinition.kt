@@ -25,7 +25,7 @@ import com.github.thibseisel.kdenticon.rendering.Renderer
  * This means that for all points to be contained in the cell,
  * they must be defined in `[0.0, cell] x [0.0, cell]`.
  */
-interface ShapeDefinition {
+public interface ShapeDefinition {
 
     /**
      * Renders a shape in the specified drawing context.
@@ -37,5 +37,5 @@ interface ShapeDefinition {
      * @param cell The bounds of the cell in which the shape is rendered
      * @param index The zero-based index of the current shape position
      */
-    fun render(renderer: Renderer, cell: Int, index: Int)
+    public fun render(renderer: Renderer, cell: Int, index: Int)
 }

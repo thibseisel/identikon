@@ -20,15 +20,15 @@ package com.github.thibseisel.kdenticon.rendering
  * Defines a mathematical application that translates and rotates a point being rendered.
  */
 internal class Transform(
-        /** The x-coordinate of the upper left corner of the transformed rectangle. */
-        private val x: Int,
-        /** The y-coordinate of the upper left corner of the transformed rectangle. */
-        private val y: Int,
-        /** The size of the transformed rectangle. */
-        private val size: Int,
-        /** Rotation specified as 0 = 0 rad, 1 = 0.5π rad, 2 = π rad, 3 = 1.5π rad. */
-        private val rotation: Int) {
-
+    /** The x-coordinate of the upper left corner of the transformed rectangle. */
+    private val x: Int,
+    /** The y-coordinate of the upper left corner of the transformed rectangle. */
+    private val y: Int,
+    /** The size of the transformed rectangle. */
+    private val size: Int,
+    /** Rotation specified as 0 = 0 rad, 1 = 0.5π rad, 2 = π rad, 3 = 1.5π rad. */
+    private val rotation: Int,
+) {
     /**
      * Transforms the specified point based on the translation and rotation specification for this Transform.
      *
@@ -58,6 +58,7 @@ internal class Transform(
         /**
          * A Transform instance that does not apply any transformation.
          */
-        @JvmField val EMPTY = Transform(0, 0, 0, 0)
+        @JvmField
+        val EMPTY = Transform(0, 0, 0, 0)
     }
 }

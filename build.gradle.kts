@@ -14,21 +14,21 @@
  *    limitations under the License.
  */
 
-package com.github.thibseisel.kdenticon.draw
-
-import com.github.thibseisel.kdenticon.rendering.PointF
-
-internal class Path {
-
-    private val polygons = ArrayList<Array<PointF>>(10)
-
-    fun addPolygon(points: Array<PointF>) {
-        polygons.add(points)
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
     }
 
-    fun addCircle(center: PointF, radius: Float, clockwise: Boolean) {
-        TODO()
+    dependencies {
+        classpath(libs.android.plugin)
+        classpath(libs.kotlin.plugin)
     }
+}
 
-    fun polygons(): Iterable<Array<PointF>> = polygons
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
 }

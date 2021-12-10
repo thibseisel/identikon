@@ -1,0 +1,12 @@
+[versions]
+android-gradle = "7.0.4"
+kotlin = { require = "[1.5.0,  1.6.0[", prefer = "1.5.31" }
+kotest = "5.0.1"
+
+[libraries]
+android-plugin = { module = "com.android.tools.build:gradle", version.ref = "android.gradle" }
+kotlin-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+
+kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-runner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }

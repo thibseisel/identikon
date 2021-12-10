@@ -16,7 +16,10 @@
 
 package com.github.thibseisel.kdenticon
 
-import com.github.thibseisel.kdenticon.rendering.*
+import com.github.thibseisel.kdenticon.rendering.IconGenerator
+import com.github.thibseisel.kdenticon.rendering.Rectangle
+import com.github.thibseisel.kdenticon.rendering.Renderer
+import com.github.thibseisel.kdenticon.rendering.SvgRenderer
 import java.io.File
 import java.io.OutputStream
 import java.security.MessageDigest
@@ -34,9 +37,8 @@ import java.security.MessageDigest
  * One could extend this class to define their own shapes and their position in the icon's grid.
  * - [IdenticonStyle] defines parameters that alters the icon's general look such as color and padding.
  *
- * Most common cases such as saving as PNG or SVG are covered by methods [saveToPngFile]
- * and [saveAsSvg]. If you'd like to use your own implementation of [Renderer], you should pass it
- * to the [draw] method.
+ * Most common cases such as saving as SVG are covered by [saveAsSvg].
+ * If you'd like to use your own implementation of [Renderer], you should pass it to the [draw] method.
  *
  * @constructor Creates a new icon of a given size with the given hash sequence, initialized with
  * default generator and style.
@@ -50,9 +52,10 @@ import java.security.MessageDigest
  * @param size The size of this icon in pixels.
  *
  */
-@Suppress("unused", "MemberVisibilityCanPrivate")
-class Identicon(val hash: ByteArray, val size: Int) {
-
+public class Identicon(
+    public val hash: ByteArray,
+    public val size: Int,
+) {
     init {
         require(hash.size > 5) { "The hash should be composed at least of 6 bytes." }
         require(size > 0) { "The size should be 1 pixel or larger." }
@@ -65,7 +68,7 @@ class Identicon(val hash: ByteArray, val size: Int) {
      * Clients may extends the existing [IconGenerator] class and set it to this icon
      * to provide their own custom shapes.
      */
-    var generator = IconGenerator()
+    public var generator: IconGenerator = IconGenerator()
 
     /**
      * The style for this icon.
@@ -73,7 +76,7 @@ class Identicon(val hash: ByteArray, val size: Int) {
      *
      * This is initialized to the [default style][IdenticonStyle.DEFAULT_STYLE].
      */
-    var style = IdenticonStyle.DEFAULT_STYLE
+    public var style: IdenticonStyle = IdenticonStyle.DEFAULT_STYLE
 
     /**
      * Draws this icon using the specified renderer.
@@ -84,33 +87,21 @@ class Identicon(val hash: ByteArray, val size: Int) {
      * @param renderer The renderer used to render this icon.
      * @param rect The bounds of the rendered icon. No padding will be applied to the rectangle.
      */
-    fun draw(renderer: Renderer, rect: Rectangle) {
+    public fun draw(renderer: Renderer, rect: Rectangle) {
         generator.generate(renderer, rect, style, hash)
     }
 
     /**
      * Get the bounds of the icon, taking its padding into account.
      */
-    fun getIconBounds() = Rectangle(
-            (style.padding * size).toInt(),
-            (style.padding * size).toInt(),
-            size - (style.padding * size).toInt() * 2,
-            size - (style.padding * size).toInt() * 2
-    )
-
-    /**
-     * Save this icon to a PNG file.
-     * This internally uses [PngRenderer].
-     *
-     * Notice: do not use this method, as the PngRenderer is not ready.
-     *
-     * @param stream
-     */
-    fun saveToPngFile(stream: OutputStream) {
-        val renderer = PngRenderer(size, size)
-        val iconBounds = this.getIconBounds()
-        this.draw(renderer, iconBounds)
-        renderer.savePng(stream)
+    public fun getIconBounds(): Rectangle {
+        val scaledPadding = (style.padding * size).toInt()
+        return Rectangle(
+            x = scaledPadding,
+            y = scaledPadding,
+            width = size - scaledPadding * 2,
+            height = size - scaledPadding * 2
+        )
     }
 
     /**
@@ -120,7 +111,7 @@ class Identicon(val hash: ByteArray, val size: Int) {
      * @param filepath path of the file to create.
      * Callers are responsible for adding the `.svg` file extension if desired.
      */
-    fun saveToSvgFile(filepath: String) {
+    public fun saveToSvgFile(filepath: String) {
         File(filepath).outputStream().use {
             saveAsSvg(it)
         }
@@ -135,7 +126,7 @@ class Identicon(val hash: ByteArray, val size: Int) {
      *
      * @param stream The stream on which SVG instructions should be sent.
      */
-    fun saveAsSvg(stream: OutputStream) {
+    public fun saveAsSvg(stream: OutputStream) {
         val renderer = SvgRenderer(size, size)
         draw(renderer, getIconBounds())
         stream.bufferedWriter().use {
@@ -143,7 +134,7 @@ class Identicon(val hash: ByteArray, val size: Int) {
         }
     }
 
-    companion object {
+    public companion object {
 
         /**
          * Creates an identicon from a specified hash.
@@ -154,7 +145,8 @@ class Identicon(val hash: ByteArray, val size: Int) {
          * The size must be a strictly positive number.
          * @return An identicon instance
          */
-        @JvmStatic fun fromHash(hash: ByteArray, size: Int): Identicon = Identicon(hash, size)
+        @JvmStatic
+        public fun fromHash(hash: ByteArray, size: Int): Identicon = Identicon(hash, size)
 
         /**
          * Generates a hash from a specified value and creates an Identicon instance from the generated hash.
@@ -165,7 +157,8 @@ class Identicon(val hash: ByteArray, val size: Int) {
          * The size must be a strictly positive number.
          * @return An identicon instance
          */
-        @JvmStatic fun fromValue(value: Any, size: Int): Identicon {
+        @JvmStatic
+        public fun fromValue(value: Any, size: Int): Identicon {
             val sha1 = MessageDigest.getInstance("SHA-1")
             sha1.update(value.toString().toByteArray())
             return Identicon(sha1.digest(), size)

@@ -30,46 +30,48 @@ import com.github.thibseisel.kdenticon.IdenticonStyle
  * must be in `[0.0, 1.0]`.
  * @param style The style of the icon that will be associated to this theme.
  */
-@Suppress("MemberVisibilityCanPrivate")
-class ColorTheme(hue: Float, style: IdenticonStyle) {
-
+public class ColorTheme(hue: Float, style: IdenticonStyle) {
     init {
-        require(hue in 0.0f .. 1.0f) { "Hue should be in [0.0, 1.0]" }
+        require(hue in 0.0f..1.0f) { "Hue should be in [0.0, 1.0]" }
     }
 
     /**
      * The base color to use for this theme.
      */
-    val color: Int = colorFromHslCompensated(hue, style.saturation,
-            (style.colorLightness.start + style.colorLightness.endInclusive) / 2)
+    public val color: Int = colorFromHslCompensated(
+        hue, style.saturation,
+        (style.colorLightness.start + style.colorLightness.endInclusive) / 2
+    )
 
     /**
      * The light color variant for this theme.
      */
-    val lightColor: Int = colorFromHslCompensated(hue, style.saturation, style.colorLightness.endInclusive)
+    public val lightColor: Int =
+        colorFromHslCompensated(hue, style.saturation, style.colorLightness.endInclusive)
 
     /**
      * The dark color variant for this theme.
      */
-    val darkColor: Int = colorFromHslCompensated(hue, style.saturation, style.colorLightness.endInclusive)
+    public val darkColor: Int =
+        colorFromHslCompensated(hue, style.saturation, style.colorLightness.endInclusive)
 
     /**
      * The light shade of gray for this theme.
      */
-    val lightGray: Int = colorFromHsl(0f, 0f, style.grayScaleLightness.endInclusive)
+    public val lightGray: Int = colorFromHsl(0f, 0f, style.grayScaleLightness.endInclusive)
 
     /**
      * The dark shade of gray for this theme.
      */
-    val darkGray: Int = colorFromHsl(0f, 0f, style.grayScaleLightness.start)
+    public val darkGray: Int = colorFromHsl(0f, 0f, style.grayScaleLightness.start)
 
     /**
      * The total number of colors that this theme features.
      * The default value is `5`.
      */
-    val count: Int get() = 5
+    public val count: Int get() = 5
 
-    operator fun get(index: Int) = when (index) {
+    public operator fun get(index: Int): Int = when (index) {
         0 -> darkGray
         1 -> color
         2 -> lightGray
