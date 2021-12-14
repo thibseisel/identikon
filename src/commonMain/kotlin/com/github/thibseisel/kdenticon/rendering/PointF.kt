@@ -13,21 +13,20 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
 
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.namespace == "com.android") {
-                useModule("com.android.tools.build:gradle:${requested.version}")
-            }
-        }
-    }
+package com.github.thibseisel.kdenticon.rendering
+
+/**
+ * Represents the coordinates of a single point in a geometric plane.
+ *
+ * @param x The X-coordinate of this point
+ * @param y The Y-coordinate of this point
+ */
+public data class PointF(
+    val x: Float,
+    val y: Float,
+) {
+    override fun toString(): String = pointToString(this)
 }
 
-rootProject.name = "kdenticon"
-enableFeaturePreview("VERSION_CATALOGS")
+internal expect fun pointToString(point: PointF): String

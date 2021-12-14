@@ -13,21 +13,13 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
 
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.namespace == "com.android") {
-                useModule("com.android.tools.build:gradle:${requested.version}")
-            }
-        }
-    }
+package com.github.thibseisel.kdenticon
+
+import java.security.MessageDigest
+
+internal actual fun sha1Sum(bytes: ByteArray): ByteArray {
+    val algorithm = MessageDigest.getInstance("SHA-1")
+    algorithm.update(bytes)
+    return algorithm.digest()
 }
-
-rootProject.name = "kdenticon"
-enableFeaturePreview("VERSION_CATALOGS")

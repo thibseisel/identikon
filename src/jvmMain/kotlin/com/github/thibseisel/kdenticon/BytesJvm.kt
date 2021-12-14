@@ -13,21 +13,16 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
 
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.namespace == "com.android") {
-                useModule("com.android.tools.build:gradle:${requested.version}")
-            }
-        }
-    }
+package com.github.thibseisel.kdenticon
+
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
+
+internal actual fun isLittleEndian(): Boolean {
+    return false
 }
 
-rootProject.name = "kdenticon"
-enableFeaturePreview("VERSION_CATALOGS")
+internal actual fun bytesToInt(bytes: ByteArray): Int {
+    return ByteBuffer.wrap(bytes, 0, 4).order(ByteOrder.BIG_ENDIAN).getInt(0)
+}
