@@ -52,22 +52,28 @@ kotlin {
     }
 
     android {
+        compilations.all {
+            kotlinOptions.jvmTarget = "11"
+        }
         publishLibraryVariants("release")
     }
 
     sourceSets {
         val jvmMain by getting
-        val androidMain by getting {
+
+        getByName("androidMain") {
             dependsOn(jvmMain)
         }
 
         getByName("commonTest") {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotest.engine)
                 implementation(libs.kotest.assertions)
             }
         }
+
         getByName("jvmTest") {
             dependencies {
                 runtimeOnly(libs.kotest.runner.junit5)
