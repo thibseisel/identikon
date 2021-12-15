@@ -13,21 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.namespace == "com.android") {
-                useModule("com.android.tools.build:gradle:${requested.version}")
-            }
-        }
-    }
-}
 
 rootProject.name = "kdenticon"
 enableFeaturePreview("VERSION_CATALOGS")
+
+include(":lib")
+project(":lib").name = "kdenticon"

@@ -14,88 +14,13 @@
  *  limitations under the License.
  */
 
-@Suppress("DSL_SCOPE_VIOLATION")
-plugins {
-    alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.android.library)
-    `maven-publish`
-}
-
-allprojects {
+buildscript {
     repositories {
         google()
         mavenCentral()
     }
-}
 
-group = "com.github.thibseisel.kdenticon"
-version = "1.0.0"
-
-kotlin {
-    explicitApi()
-
-    targets.all {
-        compilations.all {
-            kotlinOptions {
-                freeCompilerArgs = freeCompilerArgs + "-progressive"
-            }
-        }
-    }
-
-    jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "11"
-        }
-        testRuns["test"].executionTask.configure {
-            useJUnitPlatform()
-        }
-    }
-
-    android {
-        compilations.all {
-            kotlinOptions.jvmTarget = "11"
-        }
-        publishLibraryVariants("release")
-    }
-
-    sourceSets {
-        val jvmMain by getting
-
-        getByName("androidMain") {
-            dependsOn(jvmMain)
-        }
-
-        getByName("commonTest") {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotest.engine)
-                implementation(libs.kotest.assertions)
-            }
-        }
-
-        getByName("jvmTest") {
-            dependencies {
-                runtimeOnly(libs.kotest.runner.junit5)
-            }
-        }
-    }
-}
-
-android {
-    compileSdk = 31
-
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 30
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    sourceSets.getByName("main") {
-        manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    dependencies {
+        classpath(libs.android.plugin)
     }
 }
