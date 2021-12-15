@@ -1,9 +1,7 @@
-[ ![JCenter](https://api.bintray.com/packages/nihilus/maven/kdenticon/images/download.svg) ](https://bintray.com/nihilus/maven/kdenticon/_latestVersion)
-
 # Kdenticon
 
-KDenticon is a Java library for generating highly recognizable identicons. Written in Kotlin, it is
-a port of [Jdenticon](https://github.com/dmester/jdenticon) to the JVM platform.
+Kdenticon is a Kotlin multiplatform library for generating highly recognizable identicons. It is a
+Kotlin port of [Jdenticon](https://github.com/dmester/jdenticon).
 
 ![](screenshots/sample_1.png)
 ![](screenshots/sample_2.png)
@@ -20,21 +18,28 @@ a port of [Jdenticon](https://github.com/dmester/jdenticon) to the JVM platform.
 An Identicon is a visual representation of a hash value, usually of an IP address, that serves to
 identify a user of a computer system as a form of avatar while protecting the users' privacy.
 
-You may also use those icons in any other context, for example as a placeholder image.
+You may also use these icons in any other context, for example as a placeholder image.
 
 ## Project status
 
-Kdenticon is still in active development. While the icon generation API is functional, at the moment
-it is only possible to save icons as SVG files. You can also use
-the [Kdenticon-Android extension](kdenticon-android).
+Kdenticon is still in active development. The following features are currently available:
+
+- save icons as SVG,
+- draw icons on an Android `Bitmap`
+
+This library is currently supporting the following platforms:
+
+- JVM 11+
+- Android API 21+
 
 ## Setup
 
-The library is available through JCenter. Add the following dependency to your Gradle build script :
+The library is available through MavenCentral. Add the following dependency to your Gradle build
+script :
 
-```gradle
+```kotlin
 dependencies {
-    implementation 'com.github.thibseisel:kdenticon:1.0.0-alpha4'
+    implementation("com.github.thibseisel:kdenticon:1.0.0")
 }
 ```
 
@@ -50,39 +55,24 @@ generated icons to SVG files.
 
 For any other use-case, you have to define your own Renderer subclass.
 
-### Writing icon to a SVG file
+### Writing icon to an SVG file
 
-```java
-public class Main {
-
-    public static void main(String[] args) {
-        // Create a new instance of the Identicon class with an hash string and the given size
-        int iconSize = 300;
-        Identicon icon = Identicon.fromValue("Hello World!", iconSize);
-
-        // Creates a new file with the given name
-        icon.saveAsSvg("kdenticon.svg");
-    }
-}
+```kotlin
+// Create a new instance of the Identicon class with an hash string and the given size
+val icon = Identicon.fromValue("Hello World!", iconSize = 300)
+// Creates a new file with the given name
+icon.saveAsSvg("kdenticon.svg")
 ```
 
 ### With your own Renderer subclass
 
-```java
-public class Main {
-
-    public static void main(String[] args) {
-        // Create a new instance of the Identicon class with an hash string and the given size
-        int iconSize = 300;
-        Identicon icon = Identicon.fromValue("Hello World!", iconSize);
-
-        // Instantiate your own Renderer implementation
-        Renderer renderer = new MyRenderer();
-
-        // Start the rendering
-        icon.draw(renderer, icon.getIconBounds());
-    }
-}
+```kotlin
+// Create a new instance of the Identicon class with an hash string and the given size
+val icon = Identicon.fromValue("Hello World!", iconSize = 300)
+// Instantiate your own Renderer implementation
+val renderer = MyRenderer()
+// Start the rendering
+icon.draw(renderer, icon.getIconBounds())
 ```
 
 ## Note about the author
