@@ -35,14 +35,6 @@ version = "1.0.0"
 kotlin {
     explicitApi()
 
-    targets.all {
-        compilations.all {
-            kotlinOptions {
-                freeCompilerArgs = freeCompilerArgs + "-progressive"
-            }
-        }
-    }
-
     jvm {
         compilations.all {
             kotlinOptions.jvmTarget = "11"
@@ -79,6 +71,10 @@ kotlin {
             dependencies {
                 runtimeOnly(libs.kotest.runner.junit5)
             }
+        }
+
+        all {
+            languageSettings.progressiveMode = true
         }
     }
 }
