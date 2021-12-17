@@ -13,9 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 rootProject.name = "kdenticon"
 enableFeaturePreview("VERSION_CATALOGS")
 
+plugins {
+    id("com.gradle.enterprise") version "3.7.2"
+}
+
 include(":lib")
 project(":lib").name = "kdenticon"
+
+gradleEnterprise {
+    buildScan {
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = "yes"
+    }
+}
