@@ -20,24 +20,24 @@ package com.github.thibseisel.kdenticon.rendering
  * Defines the direction in which the 90° angle of a triangle points to.
  * All rectangles in Kdenticon default shapes are right.
  */
-public object TriangleDirection {
+public enum class TriangleDirection {
     /**
      * The 90 degree angle is pointing to South West.
      */
-    public const val SOUTH_WEST: Int = 0
+    SOUTH_WEST,
 
     /**
      * The 90 degree angle is pointing to North West.
      */
-    public const val NORTH_WEST: Int = 1
+    NORTH_WEST,
 
     /**
      * The 90 degree angle is pointing to North East.
      */
-    public const val NORTH_EAST: Int = 2
+    NORTH_EAST,
 
     /**
      * The 90 degree angle is pointing to South East.
      */
-    public const val SOUTH_EAST: Int = 3
+    SOUTH_EAST,
 }

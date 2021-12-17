@@ -171,7 +171,7 @@ public abstract class Renderer {
         y: Float,
         width: Float,
         height: Float,
-        direction: Int,
+        direction: TriangleDirection,
         invert: Boolean = false,
     ) {
         val points = mutableListOf(
@@ -181,7 +181,7 @@ public abstract class Renderer {
             PointF(x, y)
         )
 
-        points.removeAt(direction)
+        points.removeAt(direction.ordinal)
         addPolygonInternal(points.toTypedArray(), invert)
     }
 
