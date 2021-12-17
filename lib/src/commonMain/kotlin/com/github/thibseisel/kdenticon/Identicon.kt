@@ -19,7 +19,7 @@ package com.github.thibseisel.kdenticon
 import com.github.thibseisel.kdenticon.rendering.IconGenerator
 import com.github.thibseisel.kdenticon.rendering.Rectangle
 import com.github.thibseisel.kdenticon.rendering.Renderer
-import com.github.thibseisel.kdenticon.rendering.SvgRenderer
+import com.github.thibseisel.kdenticon.svg.SvgRenderer
 import kotlin.jvm.JvmStatic
 
 /**
@@ -50,8 +50,8 @@ import kotlin.jvm.JvmStatic
  * @param size The size of this icon in pixels.
  *
  */
-public class Identicon(
-    public val hash: ByteArray,
+public class Identicon private constructor(
+    private val hash: ByteArray,
     public val size: Int,
 ) {
     init {

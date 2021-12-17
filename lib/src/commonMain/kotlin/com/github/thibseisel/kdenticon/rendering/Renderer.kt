@@ -27,8 +27,6 @@ import com.github.thibseisel.kdenticon.Identicon
  * supported by Kdenticon or directly draw the icon onto a surface.
  *
  * To use your own implementation of a renderer, pass it as an argument to the [Identicon.draw] method.
- *
- * @see SvgRenderer
  */
 public abstract class Renderer {
 

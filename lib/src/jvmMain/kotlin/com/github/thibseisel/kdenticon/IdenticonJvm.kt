@@ -15,7 +15,7 @@
  */
 package com.github.thibseisel.kdenticon
 
-import com.github.thibseisel.kdenticon.rendering.SvgRenderer
+import com.github.thibseisel.kdenticon.svg.SvgRenderer
 import java.io.File
 import java.io.OutputStream
 

@@ -14,7 +14,9 @@
  *  limitations under the License.
  */
 
-package com.github.thibseisel.kdenticon.rendering
+package com.github.thibseisel.kdenticon.svg
+
+import com.github.thibseisel.kdenticon.rendering.PointF
 
 /**
  * Represents a SVG path element.

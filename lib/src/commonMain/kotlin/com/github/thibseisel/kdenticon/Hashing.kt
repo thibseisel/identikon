@@ -16,4 +16,7 @@
 
 package com.github.thibseisel.kdenticon
 
+/**
+ * Computes the SHA-1 checksum from a given byte sequence.
+ */
 internal expect fun sha1Sum(bytes: ByteArray): ByteArray

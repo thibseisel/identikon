@@ -19,10 +19,6 @@ package com.github.thibseisel.kdenticon
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
-internal actual fun isLittleEndian(): Boolean {
-    return false
-}
-
 internal actual fun bytesToInt(bytes: ByteArray): Int {
     return ByteBuffer.wrap(bytes, 0, 4).order(ByteOrder.BIG_ENDIAN).getInt(0)
 }

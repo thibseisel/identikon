@@ -16,6 +16,4 @@
 
 package com.github.thibseisel.kdenticon
 
-internal expect fun isLittleEndian(): Boolean
-
 internal expect fun bytesToInt(bytes: ByteArray): Int

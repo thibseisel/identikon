@@ -14,7 +14,12 @@
  *  limitations under the License.
  */
 
-package com.github.thibseisel.kdenticon.rendering
+package com.github.thibseisel.kdenticon.svg
+
+import com.github.thibseisel.kdenticon.rendering.PointF
+import com.github.thibseisel.kdenticon.rendering.Renderer
+import com.github.thibseisel.kdenticon.rendering.alpha
+import com.github.thibseisel.kdenticon.rendering.toRgbString
 
 /**
  * A Renderer implementation that renders icons as SVG path instructions.

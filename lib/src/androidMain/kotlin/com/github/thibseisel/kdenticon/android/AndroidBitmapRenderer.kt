@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.github.thibseisel.kdenticon
+package com.github.thibseisel.kdenticon.android
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
