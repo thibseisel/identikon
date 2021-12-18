@@ -19,7 +19,7 @@ package com.github.thibseisel.kdenticon.shape
 /**
  * Specifies in which cell a shape will be rendered.
  */
-public class ShapePosition(
+public data class ShapePosition(
     /**
      * The x-coordinate of the containing cell.
      */
@@ -29,38 +29,6 @@ public class ShapePosition(
      */
     public val y: Int,
 ) {
-
-    /**
-     * The x-coordinate of the containing cell.
-     */
-    public operator fun component1(): Int = x
-
-    /**
-     * The y-coordinate of the containing cell.
-     */
-    public operator fun component2(): Int = y
-
-    /**
-     * Returns a hash code value for the object.
-     * @see Any.hashCode
-     */
-    override fun hashCode(): Int {
-        var result = x
-        result = 31 * result + y
-        return result
-    }
-
-    /**
-     * Indicates whether some other object is "equal to" this one.
-     * @see Any.equals
-     */
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is ShapePosition) return false
-
-        return x == other.x && y == other.y
-    }
-
     /**
      * Returns a string representation of this shape position.
      */
