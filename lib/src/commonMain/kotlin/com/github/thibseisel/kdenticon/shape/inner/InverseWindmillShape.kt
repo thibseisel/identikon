@@ -30,7 +30,7 @@ internal object InverseWindmillShape : ShapeDefinition {
         val k = fCell * 0.42f
 
         renderer.addPolygon(
-            arrayOf(
+            listOf(
                 PointF(0f, 0f),
                 PointF(fCell, 0f),
                 PointF(fCell, fCell - k * 2),

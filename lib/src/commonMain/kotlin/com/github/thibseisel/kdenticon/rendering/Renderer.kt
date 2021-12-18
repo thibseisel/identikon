@@ -41,7 +41,7 @@ public abstract class Renderer {
      *
      * @param points The coordinates of the points the polygon consists of.
      */
-    protected abstract fun addPolygonNoTransform(points: Array<PointF>)
+    protected abstract fun addPolygonNoTransform(points: List<PointF>)
 
     /**
      * Adds a circle without translating of its border.
@@ -82,17 +82,14 @@ public abstract class Renderer {
      * @param points The coordinates of the points this polygon consists of.
      * @param invert If `true` the area of the polygon will be removed from the filled area.
      */
-    private fun addPolygonInternal(points: Array<PointF>, invert: Boolean) {
+    private fun addPolygonInternal(points: List<PointF>, invert: Boolean) {
+        val transformedPoints = points.mapTo(mutableListOf()) { (x, y) ->
+            transform.transformPoint(x, y)
+        }
         if (invert) {
-            points.reverse()
+            transformedPoints.reverse()
         }
-
-        for (i in points.indices) {
-            val (x, y) = points[i]
-            points[i] = transform.transformPoint(x, y)
-        }
-
-        addPolygonNoTransform(points)
+        addPolygonNoTransform(transformedPoints)
     }
 
     /**
@@ -119,12 +116,13 @@ public abstract class Renderer {
         invert: Boolean = false,
     ) {
         addPolygonInternal(
-            arrayOf(
+            listOf(
                 PointF(x, y),
                 PointF(x + width, y),
                 PointF(x + width, y + height),
                 PointF(x, y + height)
-            ), invert
+            ),
+            invert
         )
     }
 
@@ -151,8 +149,8 @@ public abstract class Renderer {
      * @param points The coordinates of the points this polygon consists of.
      * @param invert If `true` the area of the polygon will be removed from the filled area.
      */
-    public fun addPolygon(points: Array<PointF>, invert: Boolean = false) {
-        addPolygonInternal(points.copyOf(), invert)
+    public fun addPolygon(points: List<PointF>, invert: Boolean = false) {
+        addPolygonInternal(points, invert)
     }
 
     /**
@@ -182,7 +180,7 @@ public abstract class Renderer {
         )
 
         points.removeAt(direction.ordinal)
-        addPolygonInternal(points.toTypedArray(), invert)
+        addPolygonInternal(points, invert)
     }
 
     /**
@@ -202,12 +200,13 @@ public abstract class Renderer {
         invert: Boolean = false,
     ) {
         addPolygonInternal(
-            arrayOf(
+            listOf(
                 PointF(x + width / 2, y),
                 PointF(x + width, y + height / 2),
                 PointF(x + width / 2, y + height),
                 PointF(x, y + height / 2)
-            ), invert
+            ),
+            invert
         )
     }
 }

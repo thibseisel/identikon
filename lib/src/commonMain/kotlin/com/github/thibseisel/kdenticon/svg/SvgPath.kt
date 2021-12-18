@@ -50,7 +50,7 @@ internal class SvgPath {
      * Adds a polygon to this SVG path.
      * @param points the points this polygon consists of.
      */
-    fun addPolygon(points: Array<PointF>) {
+    fun addPolygon(points: List<PointF>) {
         // Prevent failures if the polygon has no point
         if (points.isNotEmpty()) {
 

@@ -27,7 +27,7 @@ internal object CrossShape : ShapeDefinition {
     override fun render(renderer: Renderer, cell: Int, index: Int) {
         val fCell = cell.toFloat()
         renderer.addPolygon(
-            arrayOf(
+            listOf(
                 PointF(0f, 0f),
                 PointF(fCell, 0f),
                 PointF(fCell, fCell * 0.7f),

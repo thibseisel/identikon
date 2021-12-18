@@ -55,7 +55,7 @@ public class SvgRenderer(
         path.addCircle(location, diameter, counterClockwise)
     }
 
-    override fun addPolygonNoTransform(points: Array<PointF>) {
+    override fun addPolygonNoTransform(points: List<PointF>) {
         path.addPolygon(points)
     }
 

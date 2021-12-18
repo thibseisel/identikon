@@ -41,7 +41,7 @@ public class AndroidBitmapRenderer(bitmap: Bitmap) : Renderer() {
         isAntiAlias = true
     }
 
-    override fun addPolygonNoTransform(points: Array<PointF>) {
+    override fun addPolygonNoTransform(points: List<PointF>) {
         if (points.isNotEmpty()) {
 
             path.moveTo(points[0].x, points[0].y)

@@ -105,8 +105,8 @@ public open class IconGenerator {
      * @param hash The hash for which the shapes will be returned
      */
     protected open fun getShapes(colorTheme: ColorTheme, hash: ByteArray): List<Shape> {
-        val shapes = ArrayList<Shape>()
-        val usedColorThemeIndexes = ArrayList<Int>()
+        val shapes = mutableListOf<Shape>()
+        val usedColorThemeIndexes = mutableListOf<Int>()
 
         for (category in this.categories) {
             var colorThemeIndex = getOctet(hash, category.colorIndex) % colorTheme.count
@@ -229,9 +229,7 @@ public open class IconGenerator {
             var rotation = shape.startRotationIndex
 
             renderer.renderShape(shape.color) {
-                for (i in shape.positions.indices) {
-                    val position = shape.positions[i]
-
+                for ((index, position) in shape.positions.withIndex()) {
                     renderer.transform = Transform(
                         normalizedRect.x + position.x * cellSize,
                         normalizedRect.y + position.y * cellSize,
@@ -239,7 +237,7 @@ public open class IconGenerator {
                         rotation++ % 4
                     )
 
-                    shape.definition.render(renderer, cellSize, i)
+                    shape.definition.render(renderer, cellSize, index)
                 }
             }
         }

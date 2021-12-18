@@ -31,7 +31,7 @@ internal object FourShardsShape : ShapeDefinition {
 
         renderer.addRectangle(0f, 0f, cell.toFloat(), cell.toFloat())
         renderer.addPolygon(
-            points = arrayOf(
+            points = listOf(
                 PointF(outer, outer),
                 PointF(cell - inner, outer),
                 PointF(outer + (cell - outer - inner) / 2, cell - inner)
