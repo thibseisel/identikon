@@ -18,8 +18,8 @@ package com.github.thibseisel.kdenticon.rendering
 
 import com.github.thibseisel.kdenticon.IdenticonStyle
 import com.github.thibseisel.kdenticon.bytesToInt
-import com.github.thibseisel.kdenticon.shape.CenterShapes
-import com.github.thibseisel.kdenticon.shape.OuterShapes
+import com.github.thibseisel.kdenticon.shape.INNER_SHAPES
+import com.github.thibseisel.kdenticon.shape.OUTER_SHAPES
 import com.github.thibseisel.kdenticon.shape.Shape
 import com.github.thibseisel.kdenticon.shape.ShapeCategory
 import com.github.thibseisel.kdenticon.shape.xy
@@ -267,7 +267,7 @@ public open class IconGenerator {
             // Shapes that are rendered at the outer bounds of the icon
             ShapeCategory(
                 colorIndex = 8,
-                shapes = OuterShapes.values().toList(),
+                shapes = OUTER_SHAPES,
                 shapeIndex = 2,
                 rotationIndex = 3,
                 positions = listOf(1 xy 0, 2 xy 0, 2 xy 3, 1 xy 3, 0 xy 1, 3 xy 1, 3 xy 2, 0 xy 2)
@@ -276,7 +276,7 @@ public open class IconGenerator {
             // Shapes that are rendered at the corners of the icons
             ShapeCategory(
                 colorIndex = 9,
-                shapes = OuterShapes.values().toList(),
+                shapes = OUTER_SHAPES,
                 shapeIndex = 4,
                 rotationIndex = 5,
                 positions = listOf(0 xy 0, 3 xy 0, 3 xy 3, 0 xy 3)
@@ -285,7 +285,7 @@ public open class IconGenerator {
             // Shapes that are rendered at the center of the icon
             ShapeCategory(
                 colorIndex = 10,
-                shapes = CenterShapes.values().toList(),
+                shapes = INNER_SHAPES,
                 shapeIndex = 1,
                 rotationIndex = null,
                 positions = listOf(1 xy 1, 2 xy 1, 2 xy 2, 1 xy 2)
