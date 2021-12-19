@@ -44,14 +44,12 @@ public class AndroidBitmapRenderer(bitmap: Bitmap) : Renderer() {
 
     override fun addPolygonNoTransform(points: List<PointF>) {
         if (points.isNotEmpty()) {
-
             path.moveTo(points[0].x, points[0].y)
             points.forEach { path.lineTo(it.x, it.y) }
 
             // Close the shape by linking the last point to the first one
             path.lineTo(points[0].x, points[0].y)
         }
-
     }
 
     override fun addCircleNoTransform(
