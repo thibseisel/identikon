@@ -38,32 +38,42 @@ public class ColorTheme(hue: Float, style: IdenticonStyle) {
     /**
      * The base color to use for this theme.
      */
-    public val color: Int = colorFromHslCompensated(
-        hue, style.saturation,
-        (style.colorLightness.start + style.colorLightness.endInclusive) / 2
+    public val color: Color = Color.hsl(
+        hue,
+        saturation = style.saturation,
+        lightness = compensateLightness(
+            lightness = (style.colorLightness.start + style.colorLightness.endInclusive) / 2,
+            hue
+        )
     )
 
     /**
      * The light color variant for this theme.
      */
-    public val lightColor: Int =
-        colorFromHslCompensated(hue, style.saturation, style.colorLightness.endInclusive)
+    public val lightColor: Color = Color.hsl(
+        hue,
+        saturation = style.saturation,
+        lightness = compensateLightness(style.colorLightness.start, hue)
+    )
 
     /**
      * The dark color variant for this theme.
      */
-    public val darkColor: Int =
-        colorFromHslCompensated(hue, style.saturation, style.colorLightness.endInclusive)
+    public val darkColor: Color = Color.hsl(
+        hue,
+        saturation = style.saturation,
+        lightness = compensateLightness(style.colorLightness.endInclusive, hue)
+    )
 
     /**
      * The light shade of gray for this theme.
      */
-    public val lightGray: Int = colorFromHsl(0f, 0f, style.grayScaleLightness.endInclusive)
+    public val lightGray: Color = Color.hsl(0f, 0f, style.grayScaleLightness.endInclusive)
 
     /**
      * The dark shade of gray for this theme.
      */
-    public val darkGray: Int = colorFromHsl(0f, 0f, style.grayScaleLightness.start)
+    public val darkGray: Color = Color.hsl(0f, 0f, style.grayScaleLightness.start)
 
     /**
      * The total number of colors that this theme features.
@@ -71,7 +81,7 @@ public class ColorTheme(hue: Float, style: IdenticonStyle) {
      */
     public val count: Int get() = 5
 
-    public operator fun get(index: Int): Int = when (index) {
+    public operator fun get(index: Int): Color = when (index) {
         0 -> darkGray
         1 -> color
         2 -> lightGray

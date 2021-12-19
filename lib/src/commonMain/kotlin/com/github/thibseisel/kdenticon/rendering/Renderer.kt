@@ -61,7 +61,7 @@ public abstract class Renderer {
      *
      * @param color The color to use as a background, represented as a sRGB-encoded 32 bits integer
      */
-    public abstract fun setBackground(color: Int)
+    public abstract fun setBackground(color: Color)
 
     /**
      * Performs the rendering of a new shape.
@@ -73,7 +73,7 @@ public abstract class Renderer {
      * @param color The fill color of the shape.
      * @param action The actual drawing of the shapes.
      */
-    public abstract fun renderShape(color: Int, action: () -> Unit)
+    public abstract fun renderShape(color: Color, action: () -> Unit)
 
     /**
      * Renders a polygon defined by the coordinates of its vertexes.

@@ -53,17 +53,16 @@ kotlin {
 
     sourceSets {
         val jvmMain by getting
-
         getByName("androidMain") {
             dependsOn(jvmMain)
         }
 
         getByName("commonTest") {
             dependencies {
-                implementation(kotlin("test"))
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotest.engine)
                 implementation(libs.kotest.assertions)
+                implementation(libs.kotest.framework.datatest)
             }
         }
 
@@ -73,8 +72,17 @@ kotlin {
             }
         }
 
+        getByName("androidTest") {
+            dependencies {
+                runtimeOnly(libs.kotest.runner.junit5)
+            }
+        }
+
         all {
-            languageSettings.progressiveMode = true
+            languageSettings {
+                progressiveMode = true
+                optIn("kotlin.RequiresOptIn")
+            }
         }
     }
 }
@@ -94,6 +102,10 @@ android {
 
     sourceSets.getByName("main") {
         manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    }
+
+    testOptions {
+        unitTests.all(Test::useJUnitPlatform)
     }
 }
 

@@ -14,174 +14,148 @@
  *  limitations under the License.
  */
 
-@file:JvmName("Color")
-
 package com.github.thibseisel.kdenticon.rendering
 
-import kotlin.jvm.JvmName
+import kotlin.jvm.JvmInline
 import kotlin.math.roundToInt
 
 /**
- * Create the representation of a color in the sRGB color space as a 32-bits integer.
- *
- * Each channel value is expected to fit in `[0, 255]`.
- * If it doesn't, any extra bit other than the four first ones are set to 0.
- *
- * @param alpha The value of alpha channel, must be in `[0, 255]`
- * @param red The value of the red channel, must be in `[0, 255]`
- * @param green The value of the green channel, must be in `[0, 255]`
- * @param blue The value of the blue channel, must be in `[0, 255]`
+ * Abstracts away the machine representation of a color.
  */
-@JvmName("fromArgb")
-internal fun colorOf(alpha: Int, red: Int, green: Int, blue: Int): Int =
-    (alpha and 0xff shl 24) or
-            (red and 0xff shl 16) or
-            (green and 0xff shl 8) or
-            (blue and 0xff)
+@JvmInline
+public value class Color private constructor(
+    private val rgba: UInt,
+) {
+    /**
+     * Intensity of the red component of this color, expressed as a positive integer in `[0, 255]`.
+     */
+    public val red: UInt
+        get() = (rgba shr 24) and 0xffu
 
-/**
- * The value for the alpha channel for the color represented by this integer.
- * @receiver a 32-bits integer representing a color in the sRGB space.
- */
-internal val Int.alpha: Int get() = (this ushr 24)
+    /**
+     * Intensity of the green component of this color, expressed as a positive integer in `[0, 255]`.
+     */
+    public val green: UInt
+        get() = (rgba shr 16) and 0xffu
 
-/**
- * The value for the red channel for the color represented by this integer.
- * @receiver a 32-bits integer representing a color in the sRGB space.
- */
-internal val Int.red: Int get() = (this shr 16) and 0xff
+    /**
+     * Intensity of the blue component of this color, expressed as a positive integer in `[0, 255]`.
+     */
+    public val blue: UInt
+        get() = (rgba shr 8) and 0xffu
 
-/**
- * The value for the green channel for the color represented by this integer.
- * @receiver a 32-bits integer representing a color in the sRGB space.
- */
-internal val Int.green: Int get() = (this shr 8) and 0xff
+    /**
+     * Opacity of this color, expressed as a positive integer in `[0, 255]`.
+     * `0` is fully transparent while `255` is fully opaque.
+     */
+    public val alpha: UInt
+        get() = rgba and 0xffu
 
-/**
- * The value for the blue channel for the color represented by this integer.
- * @receiver a 32-bits integer representing a color in the sRGB space.
- */
-internal val Int.blue: Int get() = (this) and 0xff
+    /**
+     * Returns a 32-bits representation of this color.
+     */
+    public fun toRgbaInt(): UInt = rgba
 
-private fun hueToRgb(m1: Float, m2: Float, h: Float): Int {
-    val hh = when {
-        h < 0 -> h + 6f
-        h > 6 -> h - 6f
-        else -> h
+    override fun toString(): String {
+        return "#" + rgba.toString(16).padStart(8, '0')
     }
 
-    return (255 * when {
-        hh < 1f -> m1 + (m2 - m1) * hh
-        hh < 3f -> m2
-        hh < 4f -> m1 + (m2 - m1) * (4f - hh)
-        else -> m1
-    }).roundToInt()
+    public companion object Factory {
+        /**
+         * Defines a color as a 32-bits integer where [red], [green], [blue] and [alpha] components
+         * are each encoded as a 8-bits integer, in this order.
+         *
+         * You may use the hexadecimal notation for readability:
+         * `0xFF0000FFu` is a plain red, while `0x7F7F7FFFu` is a medium grey.
+         */
+        public fun hex(rgba: UInt): Color = Color(rgba)
+
+        /**
+         * Defines a color from each of its 4 RGBA components.
+         * Each component should be a positive integer in `[0, 255]`.
+         */
+        public fun rgba(red: UInt, green: UInt, blue: UInt, alpha: UInt = 0xffu): Color {
+            checkRgbRange("red", red)
+            checkRgbRange("green", green)
+            checkRgbRange("blue", blue)
+            checkRgbRange("alpha", alpha)
+
+            val encoded = (red shl 24) or (green shl 16) or (blue shl 8) or alpha
+            return Color(encoded)
+        }
+
+        private fun checkRgbRange(name: String, value: UInt) {
+            require(value in 0x00u..0xffu) {
+                "$name should be in [0, 255], was $value"
+            }
+        }
+
+        /**
+         * Defines a color using the HSL color space.
+         * @param hue Hue normalized in the range `[0, 1]`. `0.0` is red, `0.33` is green,
+         * `0.66` is blue, and `1.0` is also red.
+         * @param saturation Saturation expressed in percent and in the range `[0, 1]` where
+         * 0% is achromatic and 100% is full color.
+         * @param lightness Lightness expressed in percents and in the range `[0, 1]` where
+         * 0% is black and 100% is white.
+         */
+        public fun hsl(hue: Float, saturation: Float, lightness: Float): Color {
+            checkHslRange("hue", hue)
+            checkHslRange("saturation", saturation)
+            checkHslRange("lightness", lightness)
+
+            if (saturation == 0f) {
+                // No saturation: it is a shade of grey
+                val light = (lightness * 255).roundToInt().toUInt()
+                return rgba(light, light, light)
+            }
+            val m2 = when {
+                lightness <= 0.5f -> lightness * (saturation + 1f)
+                else -> lightness + saturation - lightness * saturation
+            }
+            val m1 = lightness * 2f - m2
+            return rgba(
+                red = hueToRgb(m1, m2, hue * 6 + 2),
+                green = hueToRgb(m1, m2, hue * 6),
+                blue = hueToRgb(m1, m2, hue * 6 - 2)
+            )
+        }
+
+        private fun hueToRgb(m1: Float, m2: Float, h: Float): UInt {
+            val hh = when {
+                h < 0 -> h + 6f
+                h > 6 -> h - 6f
+                else -> h
+            }
+
+            return (255 * when {
+                hh < 1f -> m1 + (m2 - m1) * hh
+                hh < 3f -> m2
+                hh < 4f -> m1 + (m2 - m1) * (4f - hh)
+                else -> m1
+            }).roundToInt().toUInt()
+        }
+
+        private fun checkHslRange(componentName: String, value: Float) {
+            require(value in 0.0f..1.0f) {
+                "$componentName should be in [0.0, 1.0]"
+            }
+        }
+    }
 }
 
 /**
- * Convert a color from the HSL color space to a sRGB color encoded as an integer.
- *
- * @param hue Hue normalized in the range `[0, 1]`.
- *         0.0 is red, 1/3 is green, 2/3 is blue, 1.0 is also red.
- * @param saturation Saturation in the range `[0, 1]`,
- *         expressed in percent where 0% is achromatic and 100% is full color.
- * @param lightness Lightness in the range `[0, 1]`
- *         expressed in percent where 0% is black and 100% is white.
- * @return an ARGB-encoded color integer
+ * Factor whose value is in `[0.0, 1.0]` describing how opaque this color is.
+ * `0.0` means "completely transparent" while `1.0` is "completely opaque".
  */
-@JvmName("fromHsl")
-internal fun colorFromHsl(hue: Float, saturation: Float, lightness: Float): Int {
-    require(hue in 0.0f..1.0f) { "Hue should be in [0, 1]" }
-    require(saturation in 0.0f..1.0f) { "Saturation should be in [0, 1]" }
-    require(lightness in 0.0f..1.0f) { "Lightness should be in [0, 1]" }
-
-    return if (saturation == 0f) {
-        // No saturation: this is a shape of grey
-        val value = (lightness * 255).roundToInt()
-        colorOf(255, value, value, value)
-    } else {
-        // Calculate hue values
-        val m2 = if (lightness <= 0.5f) lightness * (saturation + 1f)
-        else lightness + saturation - lightness * saturation
-
-        val m1 = lightness * 2f - m2
-        colorOf(
-            255,
-            hueToRgb(m1, m2, hue * 6 + 2),
-            hueToRgb(m1, m2, hue * 6),
-            hueToRgb(m1, m2, hue * 6 - 2)
-        )
-    }
-}
-
-/**
- * Blends this color with another color using the over bending operation.
- *
- * @receiver a 32-bits integer representing a color in the sRGB space.
- * @param background The color of the background on which this color should be blended over.
- */
-internal fun Int.blendOver(background: Int): Int {
-    val foreAlpha = this.alpha
-
-    if (foreAlpha < 1) {
-        // Foreground is fully transparent, no blending
-        return background
-    } else if (foreAlpha > 254 || background.alpha < 1) {
-        // Foreground is opaque or background is fully transparent, no blending
-        return this
-    }
-
-    // Source: https://en.wikipedia.org/wiki/Alpha_compositing#Description
-    val forePA = foreAlpha * 255
-    val backPA = background.alpha * (255 - foreAlpha)
-    val alpha = (forePA + backPA)
-
-    val b = ((forePA * this.blue + backPA * background.blue) / alpha)
-    val g = ((forePA * this.green + backPA * background.green) / alpha)
-    val r = ((forePA * this.red + backPA * background.red) / alpha)
-    val a = (alpha / 255)
-
-    return colorOf(a, r, g, b)
-}
-
-private val lightnessCompensations = floatArrayOf(0.55f, 0.5f, 0.5f, 0.46f, 0.6f, 0.55f, 0.55f)
-
-/**
- * Create the representation of a color from the HSL color parameters
- * and compensate the lightness for hues that appear to be darker than others.
- *
- * @param hue Hue in the range [0, 1]
- * @param saturation Saturation in the range [0, 1]
- * @param lightness Lightness in the range [0, 1]
- * @return an ARGB-encoded color integer
- */
-@JvmName("fromHslCompensated")
-internal fun colorFromHslCompensated(hue: Float, saturation: Float, lightness: Float): Int {
-    require(hue in 0f..1f) { "Hue should be in [0, 1]" }
-
-    val lightnessCompensation = lightnessCompensations[(hue * 6 + 0.5f).toInt()]
-
-    // Adjust the input lightness relative to the compensation
-    val newLightness = when {
-        lightness < 0.5f -> lightness * lightnessCompensation * 2f
-        else -> lightnessCompensation + (lightness - 0.5f) * (1 - lightnessCompensation) * 2f
-    }
-
-    return colorFromHsl(hue, saturation, newLightness)
-}
-
-/**
- * Produces a String representation of this color.
- *
- * @receiver an integer encoding a color in the sRGB color space.
- * @return a string representation of this color formatted as `#AARRGGBB`.
- */
-internal fun Int.toColorString(): String = '#' + this.toString(16).padStart(8, '0')
+public val Color.opacity: Float
+    get() = alpha.toInt() / 255f
 
 /**
  * Produces a String representation of this color, ignoring alpha channel.
- *
- * @receiver an integer encoding a color in the sRGB color space.
- * @return a string representation of this color formatted as `#RRGGBB`.
+ * RGB colors have the following format: `#RRGGBB`.
  */
-internal fun Int.toRgbString(): String = "#" + (this and 0xffffff).toString(16).padStart(6, '0')
+public fun Color.toRgbString(): String {
+    val rgb = (red shl 16) or (green shl 8) or blue
+    return "#" + rgb.toString(16).padStart(6, '0')
+}

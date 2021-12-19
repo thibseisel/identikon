@@ -14,29 +14,15 @@
  *  limitations under the License.
  */
 
-package com.github.thibseisel.kdenticon.shape
+package com.github.thibseisel.kdenticon.android
 
 import com.github.thibseisel.kdenticon.rendering.Color
 
 /**
- * Represents a shape to be rendered in an icon.
- * These instances are hash-specific and will be rendered in each cell.
+ * Express a color in a format that's suitable for Android.
+ * On Android, colors are encoded as 32-bits integers where ARGB components are each
+ * 8-bits integers.
  */
-public class Shape(
-    /**
-     * The shape definition to be used to render the shape.
-     */
-    public val definition: ShapeDefinition,
-    /**
-     * The fill color of the shape.
-     */
-    public val color: Color,
-    /**
-     * The rotation index of the icon in the first position.
-     */
-    public val startRotationIndex: Int,
-    /**
-     * The positions in which the shape will be rendered.
-     */
-    public val positions: List<ShapePosition>,
-)
+internal fun Color.toArgbInt(): Int {
+    return ((alpha shl 24) or (red shl 16) or (green shl 8) or blue).toInt()
+}

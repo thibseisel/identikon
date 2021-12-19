@@ -16,9 +16,10 @@
 
 package com.github.thibseisel.kdenticon.svg
 
+import com.github.thibseisel.kdenticon.rendering.Color
 import com.github.thibseisel.kdenticon.rendering.PointF
 import com.github.thibseisel.kdenticon.rendering.Renderer
-import com.github.thibseisel.kdenticon.rendering.alpha
+import com.github.thibseisel.kdenticon.rendering.opacity
 import com.github.thibseisel.kdenticon.rendering.toRgbString
 
 /**
@@ -33,17 +34,17 @@ public class SvgRenderer(
     private val height: Int,
 ) : Renderer() {
 
-    private val pathsByColor = mutableMapOf<Int, SvgPath>()
+    private val pathsByColor = mutableMapOf<Color, SvgPath>()
 
     private lateinit var path: SvgPath
-    private var backgroundColor = 0x00000000
+    private var backgroundColor = Color.hex(0x00000000u)
 
-    override fun renderShape(color: Int, action: () -> Unit) {
+    override fun renderShape(color: Color, action: () -> Unit) {
         path = pathsByColor.getOrPut(color, ::SvgPath)
         action()
     }
 
-    override fun setBackground(color: Int) {
+    override fun setBackground(color: Color) {
         backgroundColor = color
     }
 
@@ -65,7 +66,6 @@ public class SvgRenderer(
      * @param partial If `true` an SVG string without the root svg tag will be rendered.
      */
     public fun save(writer: Appendable, partial: Boolean) {
-
         // Add SVG root element tag if requested
         if (!partial) {
             writer.append(
@@ -80,21 +80,18 @@ public class SvgRenderer(
         }
 
         // Draw the background only if it is not transparent
-        if (backgroundColor.alpha > 0) {
-            val opacity = backgroundColor.alpha / 255f
-
+        if (backgroundColor.alpha > 0u) {
             writer.append("\n")
-
             writer.append(
                 """
                 |   <rect
                 |       fill="${backgroundColor.toRgbString()}"
-                |       fill-opacity="$opacity"
+                |       fill-opacity="${backgroundColor.opacity}"
                 |       x="0"
                 |       y="0"
                 |       width="$width"
                 |       height="$height" />
-            """.trimMargin()
+                """.trimMargin()
             )
         }
 

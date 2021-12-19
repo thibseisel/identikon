@@ -14,29 +14,23 @@
  *  limitations under the License.
  */
 
-package com.github.thibseisel.kdenticon.shape
+package com.github.thibseisel.kdenticon.android
 
 import com.github.thibseisel.kdenticon.rendering.Color
+import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.datatest.withData
+import io.kotest.matchers.shouldBe
 
-/**
- * Represents a shape to be rendered in an icon.
- * These instances are hash-specific and will be rendered in each cell.
- */
-public class Shape(
-    /**
-     * The shape definition to be used to render the shape.
-     */
-    public val definition: ShapeDefinition,
-    /**
-     * The fill color of the shape.
-     */
-    public val color: Color,
-    /**
-     * The rotation index of the icon in the first position.
-     */
-    public val startRotationIndex: Int,
-    /**
-     * The positions in which the shape will be rendered.
-     */
-    public val positions: List<ShapePosition>,
-)
+internal class ColorAndroidSpec : DescribeSpec({
+    describe("toArgbInt") {
+        it("transforms RGBA to ARGB") {
+            withData(
+                Color.hex(0x000000ffu) to 0xff000000,
+                Color.hex(0xaabbccffu) to 0xffaabbcc,
+                Color.hex(0xaabbcc7fu) to 0x7faabbcc
+            ) { (color, argb) ->
+                color.toArgbInt() shouldBe argb.toInt()
+            }
+        }
+    }
+})

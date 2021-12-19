@@ -20,6 +20,7 @@ import com.github.thibseisel.kdenticon.IdenticonStyle.Companion.DEFAULT_COLOR_LI
 import com.github.thibseisel.kdenticon.IdenticonStyle.Companion.DEFAULT_GRAY_SCALE_LIGHTNESS
 import com.github.thibseisel.kdenticon.IdenticonStyle.Companion.DEFAULT_PADDING
 import com.github.thibseisel.kdenticon.IdenticonStyle.Companion.DEFAULT_SATURATION
+import com.github.thibseisel.kdenticon.rendering.Color
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmStatic
 
@@ -33,7 +34,7 @@ public class IdenticonStyle(
      *
      * The default background color is white.
      */
-    public val backgroundColor: Int = 0xffffffff.toInt(),
+    public val backgroundColor: Color = Color.hex(0xffffffffu),
     /**
      * the padding between the edge of the image and the bounds of the rendered icon.
      * Values are expressed in percent and are expected to fit in the range `[0.0, 0.4]`.

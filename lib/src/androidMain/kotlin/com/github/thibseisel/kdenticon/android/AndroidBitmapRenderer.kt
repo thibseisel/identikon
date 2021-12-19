@@ -20,6 +20,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import com.github.thibseisel.kdenticon.rendering.Color
 import com.github.thibseisel.kdenticon.rendering.PointF
 import com.github.thibseisel.kdenticon.rendering.Renderer
 
@@ -66,15 +67,15 @@ public class AndroidBitmapRenderer(bitmap: Bitmap) : Renderer() {
         path.addCircle(cx, cy, radius, direction)
     }
 
-    override fun setBackground(color: Int) {
-        canvas.drawColor(color)
+    override fun setBackground(color: Color) {
+        canvas.drawColor(color.toArgbInt())
     }
 
-    override fun renderShape(color: Int, action: () -> Unit) {
+    override fun renderShape(color: Color, action: () -> Unit) {
         path.reset()
         action()
 
-        paint.color = color
+        paint.color = color.toArgbInt()
         canvas.drawPath(path, paint)
     }
 }
