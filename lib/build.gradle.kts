@@ -16,17 +16,10 @@
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
+    kotlin("multiplatform")
     id("com.android.library")
     alias(libs.plugins.dokka)
     `maven-publish`
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
 }
 
 group = "com.github.thibseisel.kdenticon"
