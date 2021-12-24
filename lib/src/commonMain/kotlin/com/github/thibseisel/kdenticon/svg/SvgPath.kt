@@ -16,55 +16,63 @@
 
 package com.github.thibseisel.kdenticon.svg
 
-import com.github.thibseisel.kdenticon.rendering.PointF
-
 /**
  * Represents a SVG path element.
- *
- * This class can be used as a builder: you may call any `add*` method to add drawings to the SVG path in order,
- * then call [toString] to obtain it as a string that can be written to a SVG file.
  */
 internal class SvgPath {
     private val pathBuilder = StringBuilder()
 
     /**
-     * Adds a circle to this SVG path.
-     * @param location
-     * @param diameter
-     * @param counterClockwise
+     * Moves the cursor to an absolute position in the SVG grid.
+     * Any path should begin with this command.
      */
-    fun addCircle(location: PointF, diameter: Float, counterClockwise: Boolean) {
-        // Circles are drawn using "arc-to" SVG instructions
-
-        val sweepFlag = if (counterClockwise) "0" else "1"
-        val radius = diameter / 2f
-
-        pathBuilder.append(
-            """M${location.x} ${location.y + radius}
-            a$radius,$radius 0 1, $sweepFlag ${diameter},0
-            a$radius,$radius 0 1, $sweepFlag ${-diameter},0""".trimIndent()
-        )
+    fun moveTo(x: Float, y: Float) {
+        pathBuilder.append("M$x $y")
     }
 
     /**
-     * Adds a polygon to this SVG path.
-     * @param points the points this polygon consists of.
+     * Draws a straight line from the current position to the specified absolute coordinates.
      */
-    fun addPolygon(points: List<PointF>) {
-        // Prevent failures if the polygon has no point
-        if (points.isNotEmpty()) {
+    fun lineTo(x: Float, y: Float) {
+        pathBuilder.append("L$x $y")
+    }
 
-            // The first point of this path defined with an M command
-            pathBuilder.append("M${points[0].x} ${points[0].y}")
+    /**
+     * Draws an elliptic arc.
+     * That arc ends at coordinates relative to the current cursor position.
+     *
+     * @param xRadius Radius of the ellipse on the x-axis.
+     * @param yRadius Radius of the ellipse on the y-axis.
+     * @param xAxisRotation Ellipse rotation angle from the x-axis, expressed in degrees.
+     * @param dxEnd Position on the x-axis where the stroke ends, relative to the current position
+     * of the cursor.
+     * @param dyEnd Position on the y-axis where the stroke ends, relative to the current position
+     * of the cursor.
+     * @param largeArc Whether the arc should be greater than 180 degrees. If `true`,
+     * the arc travels around most of its ellipse. Defaults to `false`.
+     * @param clockwise Whether the arc should be drawn clockwise. Defaults to `false`.
+     */
+    fun arcBy(
+        xRadius: Float,
+        yRadius: Float,
+        xAxisRotation: Float,
+        dxEnd: Float,
+        dyEnd: Float,
+        largeArc: Boolean = false,
+        clockwise: Boolean = false,
+    ) {
+        val sweepFlag = if (clockwise) 1 else 0
+        val largeFlag = if (largeArc) 1 else 0
+        pathBuilder.append("a$xRadius,$yRadius $xAxisRotation $largeFlag,$sweepFlag $dxEnd,$dyEnd")
+    }
 
-            for (point in points) {
-                // Draw segments using absolute Line-to commands
-                pathBuilder.append("L${point.x} ${point.y}")
-            }
-
-            // Close the path with a Z command
-            pathBuilder.append("Z")
-        }
+    /**
+     * Ends the this path by connecting it back to its initial point.
+     * An automatic straight line is drawn from the current point to this path's initial point.
+     * This path segment may be of zero length.
+     */
+    fun close() {
+        pathBuilder.append("Z")
     }
 
     override fun toString(): String {

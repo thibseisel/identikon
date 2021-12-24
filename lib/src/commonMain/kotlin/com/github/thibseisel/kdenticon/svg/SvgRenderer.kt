@@ -53,11 +53,25 @@ public class SvgRenderer(
         diameter: Float,
         counterClockwise: Boolean,
     ) {
-        path.addCircle(location, diameter, counterClockwise)
+        val radius = diameter / 2f
+        with(path) {
+            moveTo(location.x, location.y + radius)
+            arcBy(radius, radius, 0f, diameter, 0f, clockwise = !counterClockwise)
+            arcBy(radius, radius, 0f, -diameter, 0f, clockwise = !counterClockwise)
+            close()
+        }
     }
 
     override fun addPolygonNoTransform(points: List<PointF>) {
-        path.addPolygon(points)
+        if (points.isNotEmpty()) {
+            with(path) {
+                moveTo(points[0].x, points[0].y)
+                for (point in points.subList(1, points.size)) {
+                    lineTo(point.x, point.y)
+                }
+                close()
+            }
+        }
     }
 
     /**
@@ -70,46 +84,46 @@ public class SvgRenderer(
         if (!partial) {
             writer.append(
                 """
-                |<svg xmlns="http://www.w3.org/2000/svg"
-                |    width="$width"
-                |    height="$height"
-                |    viewBox="0 0 $width $height"
-                |    preserveAspectRatio="xMidYMid meet">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                  width="$width"
+                  height="$height"
+                  viewBox="0 0 $width $height"
+                  preserveAspectRatio="xMidYMid meet">
                 """.trimMargin()
             )
         }
 
         // Draw the background only if it is not transparent
         if (backgroundColor.alpha > 0u) {
-            writer.append("\n")
+            writer.append('\n')
             writer.append(
                 """
-                |   <rect
-                |       fill="${backgroundColor.toRgbString()}"
-                |       fill-opacity="${backgroundColor.opacity}"
-                |       x="0"
-                |       y="0"
-                |       width="$width"
-                |       height="$height" />
+                |  <rect
+                |    fill="${backgroundColor.toRgbString()}"
+                |    fill-opacity="${backgroundColor.opacity}"
+                |    x="0"
+                |    y="0"
+                |    width="$width"
+                |    height="$height" />
                 """.trimMargin()
             )
         }
 
         // Define each shape as an SVG path
         for ((color, path) in pathsByColor) {
-            writer.append("\n")
+            writer.append('\n')
             writer.append(
                 """
-                |   <path
-                |       fill="${color.toRgbString()}"
-                |       d="$path" />
+                |  <path
+                |    fill="${color.toRgbString()}"
+                |    d="$path" />
                 """.trimMargin()
             )
         }
 
         // Close the SVG root element if requested
         if (!partial) {
-            writer.append("\n")
+            writer.append('\n')
             writer.append("</svg>")
         }
     }
