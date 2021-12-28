@@ -45,7 +45,7 @@ public class Identicon private constructor(
      * supported by Kdenticon.
      * @param renderer The renderer used to render this icon.
      */
-    public fun render(renderer: Renderer) {
+    internal fun render(renderer: Renderer) {
         generator.generate(renderer, getIconBounds(), style, hash)
     }
 

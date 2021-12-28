@@ -28,7 +28,7 @@ import com.github.thibseisel.kdenticon.Identicon
  *
  * To use your own implementation of a renderer, pass it as an argument to the [Identicon.render] method.
  */
-public abstract class Renderer {
+internal abstract class Renderer {
 
     /**
      * The current transform that will be applied on all coordinates before being rendered
@@ -61,7 +61,7 @@ public abstract class Renderer {
      *
      * @param color The color to use as a background, represented as a sRGB-encoded 32 bits integer
      */
-    public abstract fun setBackground(color: Color)
+    abstract fun setBackground(color: Color)
 
     /**
      * Performs the rendering of a new shape.
@@ -73,7 +73,7 @@ public abstract class Renderer {
      * @param color The fill color of the shape.
      * @param action The actual drawing of the shapes.
      */
-    public abstract fun renderShape(color: Color, action: () -> Unit)
+    abstract fun renderShape(color: Color, action: () -> Unit)
 
     /**
      * Renders a polygon defined by the coordinates of its vertexes.
@@ -108,7 +108,7 @@ public abstract class Renderer {
      * @param width Width of the rectangle.
      * @param height Height of the rectangle.
      */
-    public fun addRectangle(
+    fun addRectangle(
         x: Float,
         y: Float,
         width: Float,
@@ -137,7 +137,7 @@ public abstract class Renderer {
      * @param size Width and height of the bounding rectangle.
      * @param invert If `true` the area of the circle will be removed from the filled area.
      */
-    public fun addCircle(x: Float, y: Float, size: Float, invert: Boolean = false) {
+    fun addCircle(x: Float, y: Float, size: Float, invert: Boolean = false) {
         val northWest = transform.transformPoint(x, y, size, size)
         addCircleNoTransform(northWest, size, invert)
     }
@@ -149,7 +149,7 @@ public abstract class Renderer {
      * @param points The coordinates of the points this polygon consists of.
      * @param invert If `true` the area of the polygon will be removed from the filled area.
      */
-    public fun addPolygon(points: List<PointF>, invert: Boolean = false) {
+    fun addPolygon(points: List<PointF>, invert: Boolean = false) {
         addPolygonInternal(points, invert)
     }
 
@@ -164,7 +164,7 @@ public abstract class Renderer {
      * as defined by [TriangleDirection].
      * @param invert If `true` the area of the triangle will be removed from the filled area.
      */
-    public fun addTriangle(
+    fun addTriangle(
         x: Float,
         y: Float,
         width: Float,
@@ -192,7 +192,7 @@ public abstract class Renderer {
      * @param height Height of the bounding rectangle.
      * @param invert If `true` the area of the rhombus will be removed from the filled area.
      */
-    public fun addRhombus(
+    fun addRhombus(
         x: Float,
         y: Float,
         width: Float,
