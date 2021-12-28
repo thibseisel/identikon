@@ -19,15 +19,15 @@ package com.github.thibseisel.kdenticon.shape
 /**
  * Specifies in which cell a shape will be rendered.
  */
-public data class ShapePosition(
+internal data class ShapePosition(
     /**
      * The x-coordinate of the containing cell.
      */
-    public val x: Int,
+    val x: Int,
     /**
      * The y-coordinate of the containing cell.
      */
-    public val y: Int,
+    val y: Int,
 ) {
     /**
      * Returns a string representation of this shape position.

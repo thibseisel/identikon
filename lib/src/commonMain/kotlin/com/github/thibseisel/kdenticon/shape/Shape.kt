@@ -22,21 +22,21 @@ import com.github.thibseisel.kdenticon.rendering.Color
  * Represents a shape to be rendered in an icon.
  * These instances are hash-specific and will be rendered in each cell.
  */
-public class Shape(
+internal class Shape(
     /**
      * The shape definition to be used to render the shape.
      */
-    public val definition: ShapeDefinition,
+    val definition: ShapeDefinition,
     /**
      * The fill color of the shape.
      */
-    public val color: Color,
+    val color: Color,
     /**
      * The rotation index of the icon in the first position.
      */
-    public val startRotationIndex: Int,
+    val startRotationIndex: Int,
     /**
      * The positions in which the shape will be rendered.
      */
-    public val positions: List<ShapePosition>,
+    val positions: List<ShapePosition>,
 )

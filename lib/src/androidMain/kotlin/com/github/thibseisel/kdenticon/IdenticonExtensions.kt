@@ -25,5 +25,5 @@ import com.github.thibseisel.kdenticon.android.AndroidBitmapRenderer
  * Renders an [Identicon] onto an Android [Bitmap].
  */
 public fun Identicon.drawToBitmap(bitmap: Bitmap) {
-    draw(AndroidBitmapRenderer(bitmap), getIconBounds())
+    render(AndroidBitmapRenderer(bitmap))
 }

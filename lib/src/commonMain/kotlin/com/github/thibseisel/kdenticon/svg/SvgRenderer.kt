@@ -29,7 +29,7 @@ import com.github.thibseisel.kdenticon.rendering.toRgbString
  * @param width The width of the icon in pixels.
  * @param height The height of the icon in pixels.
  */
-public class SvgRenderer(
+internal class SvgRenderer(
     private val width: Int,
     private val height: Int,
 ) : Renderer() {
@@ -77,21 +77,18 @@ public class SvgRenderer(
     /**
      * Write SVG instructions with the specified Writer.
      * @param writer The output writer to which the SVG will be written.
-     * @param partial If `true` an SVG string without the root svg tag will be rendered.
      */
-    public fun save(writer: Appendable, partial: Boolean) {
+    fun save(writer: Appendable) {
         // Add SVG root element tag if requested
-        if (!partial) {
-            writer.append(
-                """
-                <svg xmlns="http://www.w3.org/2000/svg"
-                  width="$width"
-                  height="$height"
-                  viewBox="0 0 $width $height"
-                  preserveAspectRatio="xMidYMid meet">
-                """.trimMargin()
-            )
-        }
+        writer.append(
+            """
+            <svg xmlns="http://www.w3.org/2000/svg"
+              width="$width"
+              height="$height"
+              viewBox="0 0 $width $height"
+              preserveAspectRatio="xMidYMid meet">
+            """.trimIndent()
+        )
 
         // Draw the background only if it is not transparent
         if (backgroundColor.alpha > 0u) {
@@ -122,9 +119,7 @@ public class SvgRenderer(
         }
 
         // Close the SVG root element if requested
-        if (!partial) {
-            writer.append('\n')
-            writer.append("</svg>")
-        }
+        writer.append('\n')
+        writer.append("</svg>")
     }
 }

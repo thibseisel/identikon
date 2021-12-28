@@ -30,7 +30,7 @@ import com.github.thibseisel.kdenticon.IdenticonStyle
  * must be in `[0.0, 1.0]`.
  * @param style The style of the icon that will be associated to this theme.
  */
-public class ColorTheme(hue: Float, style: IdenticonStyle) {
+internal class ColorTheme(hue: Float, style: IdenticonStyle) {
     init {
         require(hue in 0.0f..1.0f) { "Hue should be in [0.0, 1.0]" }
     }
@@ -38,7 +38,7 @@ public class ColorTheme(hue: Float, style: IdenticonStyle) {
     /**
      * The base color to use for this theme.
      */
-    public val color: Color = Color.hsl(
+    val color: Color = Color.hsl(
         hue,
         saturation = style.saturation,
         lightness = compensateLightness(
@@ -50,7 +50,7 @@ public class ColorTheme(hue: Float, style: IdenticonStyle) {
     /**
      * The light color variant for this theme.
      */
-    public val lightColor: Color = Color.hsl(
+    val lightColor: Color = Color.hsl(
         hue,
         saturation = style.saturation,
         lightness = compensateLightness(style.colorLightness.start, hue)
@@ -59,7 +59,7 @@ public class ColorTheme(hue: Float, style: IdenticonStyle) {
     /**
      * The dark color variant for this theme.
      */
-    public val darkColor: Color = Color.hsl(
+    val darkColor: Color = Color.hsl(
         hue,
         saturation = style.saturation,
         lightness = compensateLightness(style.colorLightness.endInclusive, hue)
@@ -68,20 +68,20 @@ public class ColorTheme(hue: Float, style: IdenticonStyle) {
     /**
      * The light shade of gray for this theme.
      */
-    public val lightGray: Color = Color.hsl(0f, 0f, style.grayScaleLightness.endInclusive)
+    val lightGray: Color = Color.hsl(0f, 0f, style.grayScaleLightness.endInclusive)
 
     /**
      * The dark shade of gray for this theme.
      */
-    public val darkGray: Color = Color.hsl(0f, 0f, style.grayScaleLightness.start)
+    val darkGray: Color = Color.hsl(0f, 0f, style.grayScaleLightness.start)
 
     /**
      * The total number of colors that this theme features.
      * The default value is `5`.
      */
-    public val count: Int get() = 5
+    val count: Int get() = 5
 
-    public operator fun get(index: Int): Color = when (index) {
+    operator fun get(index: Int): Color = when (index) {
         0 -> darkGray
         1 -> color
         2 -> lightGray

@@ -20,7 +20,7 @@ package com.github.thibseisel.kdenticon.rendering
  * Defines the direction in which the 90° angle of a triangle points to.
  * All rectangles in Kdenticon default shapes are right.
  */
-public enum class TriangleDirection {
+internal enum class TriangleDirection {
     /**
      * The 90 degree angle is pointing to South West.
      */

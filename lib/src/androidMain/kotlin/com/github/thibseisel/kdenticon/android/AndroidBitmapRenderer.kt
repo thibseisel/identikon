@@ -34,7 +34,7 @@ import com.github.thibseisel.kdenticon.rendering.Renderer
  * @constructor Creates a new instance of a renderer that draw the icon on the provided bitmap.
  * @param bitmap The bitmap on which the icon should be drawn.
  */
-public class AndroidBitmapRenderer(bitmap: Bitmap) : Renderer() {
+internal class AndroidBitmapRenderer(bitmap: Bitmap) : Renderer() {
     private val canvas = Canvas(bitmap)
     private val path = Path()
     private val paint = Paint().apply {

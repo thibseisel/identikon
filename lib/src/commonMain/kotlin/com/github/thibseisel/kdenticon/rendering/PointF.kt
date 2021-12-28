@@ -19,10 +19,10 @@ package com.github.thibseisel.kdenticon.rendering
 /**
  * Represents the coordinates of a single point in a geometric plane.
  *
- * @param x The X-coordinate of this point
- * @param y The Y-coordinate of this point
+ * @property x The X-coordinate of this point.
+ * @property y The Y-coordinate of this point.
  */
-public data class PointF(
+internal data class PointF(
     val x: Float,
     val y: Float,
 ) {

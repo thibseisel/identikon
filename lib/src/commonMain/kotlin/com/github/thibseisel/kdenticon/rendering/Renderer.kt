@@ -26,7 +26,7 @@ import com.github.thibseisel.kdenticon.Identicon
  * You may extend this class, for example, to support a new file format that is not natively
  * supported by Kdenticon or directly draw the icon onto a surface.
  *
- * To use your own implementation of a renderer, pass it as an argument to the [Identicon.draw] method.
+ * To use your own implementation of a renderer, pass it as an argument to the [Identicon.render] method.
  */
 public abstract class Renderer {
 

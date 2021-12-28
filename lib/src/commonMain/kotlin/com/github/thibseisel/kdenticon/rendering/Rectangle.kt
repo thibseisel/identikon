@@ -24,9 +24,9 @@ package com.github.thibseisel.kdenticon.rendering
  * @property width The width of this rectangle starting from its top-left vertex.
  * @property height The height of this rectangle starting from its top-left vertex.
  */
-public class Rectangle(
-    public val x: Int,
-    public val y: Int,
-    public val width: Int,
-    public val height: Int,
+internal class Rectangle(
+    val x: Int,
+    val y: Int,
+    val width: Int,
+    val height: Int,
 )

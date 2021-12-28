@@ -110,7 +110,7 @@ public class IdenticonStyle(
          * - gray scale lightness picked in `[0.3, 0.9]`.
          */
         @JvmField
-        public val DEFAULT_STYLE: IdenticonStyle = IdenticonStyle()
+        public val DEFAULT: IdenticonStyle = IdenticonStyle()
 
         /**
          * Helper function for Java to create ranges of floating point numbers.

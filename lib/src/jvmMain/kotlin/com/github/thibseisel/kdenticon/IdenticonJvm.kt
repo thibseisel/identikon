@@ -16,35 +16,18 @@
 package com.github.thibseisel.kdenticon
 
 import com.github.thibseisel.kdenticon.svg.SvgRenderer
-import java.io.File
+import java.io.IOException
 import java.io.OutputStream
 
 /**
- * Save this icon to an SVG file.
- * This internally uses a [SvgRenderer].
- *
- * @param filepath path of the file to create.
- * Callers are responsible for adding the `.svg` file extension if desired.
- */
-public fun Identicon.saveToSvgFile(filepath: String) {
-    File(filepath).outputStream().use {
-        saveAsSvg(it)
-    }
-}
-
-/**
  * Renders this icon as a SVG file to be sent by the given stream.
- * Most of the time you'd want to save this icon to a file; in this case, prefer using
- * [saveToSvgFile].
- *
  * Callers are responsive for closing the passed stream.
  *
  * @param stream The stream on which SVG instructions should be sent.
  */
+@Throws(IOException::class)
 public fun Identicon.saveAsSvg(stream: OutputStream) {
     val renderer = SvgRenderer(size, size)
-    draw(renderer, getIconBounds())
-    stream.bufferedWriter().use {
-        renderer.save(it, false)
-    }
+    render(renderer)
+    renderer.save(stream.bufferedWriter())
 }
