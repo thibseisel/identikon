@@ -22,7 +22,8 @@ You may also use these icons in any other context, for example as a placeholder 
 
 ## Project status
 
-Kdenticon is still in active development. The following features are currently available:
+Kdenticon has just released it's first version. More features may be added at a later time. The
+following features are currently available:
 
 - save icons as SVG,
 - draw icons on an Android `Bitmap`
@@ -48,36 +49,23 @@ dependencies {
 Create an instance of the `Identicon` class. You have to provide an object whose text representation
 will be used to generate the icon.
 
-Identicons are drawn by an implementation of the `Renderer` class. It should delegates shape drawing
-to any kind of surface : directly onto a Swing window, into a PNG file or a network connection, etc.
-For the time being, the only built-in `Renderer` implementation is `SvgRenderer`, that saves
-generated icons to SVG files.
-
-For any other use-case, you have to define your own Renderer subclass.
-
 ### Writing icon to an SVG file
 
 ```kotlin
 // Create a new instance of the Identicon class with an hash string and the given size
 val icon = Identicon.fromValue("Hello World!", iconSize = 300)
-// Creates a new file with the given name
-icon.saveAsSvg("kdenticon.svg")
+// Writes the icon to a SVG file
+Path("my-icon.svg").outputStream().use {
+    icon.saveAsSvg(it)
+}
 ```
 
-### With your own Renderer subclass
+### Drawing the icon onto an Android Bitmap
 
 ```kotlin
 // Create a new instance of the Identicon class with an hash string and the given size
 val icon = Identicon.fromValue("Hello World!", iconSize = 300)
-// Instantiate your own Renderer implementation
-val renderer = MyRenderer()
 // Start the rendering
-icon.draw(renderer, icon.getIconBounds())
+val targetBitmap = Bitmap.createBitmap(128, 128, Bitmap.Config.ARGB_8888)
+icon.drawToBitmap(targetBitmap)
 ```
-
-## Note about the author
-
-Even if I did all the work of translating from JavaScript / C# to Kotlin, the algorithm used to
-generate icons and their look is not my own work. If you like the look of the icons, consider
-leaving a tip to the original author,
-[Daniel Mester Pirttijärvi](https://github.com/dmester).
