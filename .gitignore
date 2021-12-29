@@ -1,12 +1,7 @@
 *.iml
-.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
 .DS_Store
-/build
-/captures
 .externalNativeBuild
-
-# Prevent from publishing Bintray Jcenter credentials
-gradle.properties
+/.gradle
+/captures
+/build
+/local.properties
