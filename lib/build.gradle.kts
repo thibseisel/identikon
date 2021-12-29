@@ -52,7 +52,6 @@ kotlin {
 
         getByName("commonTest") {
             dependencies {
-                implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotest.engine)
                 implementation(libs.kotest.assertions)
                 implementation(libs.kotest.framework.datatest)
