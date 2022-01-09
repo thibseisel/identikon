@@ -40,7 +40,7 @@ script :
 
 ```kotlin
 dependencies {
-    implementation("com.github.thibseisel:identikon:1.0.0")
+    implementation("io.github.thibseisel:identikon:1.0.0")
 }
 ```
 

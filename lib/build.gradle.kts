@@ -22,7 +22,7 @@ plugins {
     `maven-publish`
 }
 
-group = "com.github.thibseisel.identikon"
+group = "io.github.thibseisel.identikon"
 version = "1.0.0"
 
 kotlin {
