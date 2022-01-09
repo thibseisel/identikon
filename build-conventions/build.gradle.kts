@@ -13,20 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-rootProject.name = "identikon"
-enableFeaturePreview("VERSION_CATALOGS")
 
 plugins {
-    id("com.gradle.enterprise") version "3.7.2"
+    `kotlin-dsl`
 }
 
-includeBuild("build-conventions")
-include(":lib")
-project(":lib").name = "identikon"
-
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-    }
+repositories {
+    gradlePluginPortal()
 }

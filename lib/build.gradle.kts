@@ -18,8 +18,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    alias(libs.plugins.dokka)
-    `maven-publish`
+    id("publishing.convention")
 }
 
 group = "io.github.thibseisel.identikon"
@@ -98,63 +97,5 @@ android {
 
     testOptions {
         unitTests.all(Test::useJUnitPlatform)
-    }
-}
-
-val javadocJar by tasks.registering(Jar::class) {
-    group = "documentation"
-    description = "Pack generated javadoc into a jar"
-    dependsOn(tasks.dokkaJavadoc)
-
-    from(tasks.dokkaJavadoc)
-    archiveClassifier.set("javadoc")
-}
-
-fun stringExtraOrNull(propertyName: String): String? =
-    if (ext.has(propertyName)) ext[propertyName]?.toString() else null
-
-val sonatypeUsername: String? = stringExtraOrNull("sonatype.username")
-    ?: System.getenv("SONATYPE_USERNAME")
-val sonatypePassword: String? = stringExtraOrNull("sonatype.password")
-    ?: System.getenv("SONATYPE_PASSWORD")
-
-publishing {
-    repositories {
-        maven {
-            name = "sonatype"
-            setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-            credentials {
-                username = sonatypeUsername
-                password = sonatypePassword
-            }
-        }
-    }
-
-    publications.withType<MavenPublication> {
-        artifact(javadocJar)
-
-        pom {
-            name.set("identikon")
-            description.set("A Kotlin multiplatform library for generating highly recognizable identicons.")
-            url.set("https://github.com/thibseisel/identikon")
-
-            licenses {
-                license {
-                    name.set("Apache 2.0")
-                    url.set("https://opensource.org/licenses/Apache-2.0")
-                }
-            }
-
-            developers {
-                developer {
-                    id.set("thibseisel")
-                    name.set("Thibault Seisel")
-                    email.set("seisel.thibault@gmail.com")
-                }
-            }
-            scm {
-                url.set("https://github.com/thibseisel/identikon")
-            }
-        }
     }
 }
