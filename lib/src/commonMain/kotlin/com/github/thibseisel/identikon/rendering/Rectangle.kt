@@ -13,19 +13,20 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-rootProject.name = "identikon"
-enableFeaturePreview("VERSION_CATALOGS")
 
-plugins {
-    id("com.gradle.enterprise") version "3.7.2"
-}
+package com.github.thibseisel.identikon.rendering
 
-include(":lib")
-project(":lib").name = "identikon"
-
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-    }
-}
+/**
+ * Represents a rectangle in the geometric plane.
+ *
+ * @property x The X-coordinate of the left edge of this rectangle.
+ * @property y The Y-coordinate of the top edge of this rectangle.
+ * @property width The width of this rectangle starting from its top-left vertex.
+ * @property height The height of this rectangle starting from its top-left vertex.
+ */
+internal class Rectangle(
+    val x: Int,
+    val y: Int,
+    val width: Int,
+    val height: Int,
+)

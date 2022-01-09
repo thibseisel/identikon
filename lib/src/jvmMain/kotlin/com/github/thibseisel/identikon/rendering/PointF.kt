@@ -13,19 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-rootProject.name = "identikon"
-enableFeaturePreview("VERSION_CATALOGS")
 
-plugins {
-    id("com.gradle.enterprise") version "3.7.2"
-}
+package com.github.thibseisel.identikon.rendering
 
-include(":lib")
-project(":lib").name = "identikon"
+import java.util.Locale
 
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-    }
+internal actual fun pointToString(point: PointF): String {
+    return "( %1$02f, %2$02f )".format(Locale.ROOT, point.x, point.y)
 }

@@ -13,19 +13,24 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-rootProject.name = "identikon"
-enableFeaturePreview("VERSION_CATALOGS")
 
-plugins {
-    id("com.gradle.enterprise") version "3.7.2"
-}
+package com.github.thibseisel.identikon.shape.outer
 
-include(":lib")
-project(":lib").name = "identikon"
+import com.github.thibseisel.identikon.rendering.Renderer
+import com.github.thibseisel.identikon.rendering.TriangleDirection
+import com.github.thibseisel.identikon.shape.ShapeDefinition
 
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
+/**
+ * A right rectangle whose height is half its width.
+ */
+internal object SmallTriangleShape : ShapeDefinition {
+    override fun render(renderer: Renderer, cell: Int, index: Int) {
+        renderer.addTriangle(
+            0f,
+            cell / 2f,
+            cell.toFloat(),
+            cell / 2f,
+            TriangleDirection.SOUTH_WEST
+        )
     }
 }

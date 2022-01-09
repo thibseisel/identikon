@@ -13,19 +13,18 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-rootProject.name = "identikon"
-enableFeaturePreview("VERSION_CATALOGS")
 
-plugins {
-    id("com.gradle.enterprise") version "3.7.2"
-}
+package com.github.thibseisel.identikon.shape.outer
 
-include(":lib")
-project(":lib").name = "identikon"
+import com.github.thibseisel.identikon.rendering.Renderer
+import com.github.thibseisel.identikon.shape.ShapeDefinition
 
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
+/**
+ * A circle centered in its containing cell whose radius is 1/3 of the cell width.
+ */
+internal object CircleShape : ShapeDefinition {
+    override fun render(renderer: Renderer, cell: Int, index: Int) {
+        val m = cell / 6f
+        renderer.addCircle(m, m, cell - 2 * m)
     }
 }

@@ -13,19 +13,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-rootProject.name = "identikon"
-enableFeaturePreview("VERSION_CATALOGS")
 
-plugins {
-    id("com.gradle.enterprise") version "3.7.2"
-}
+package com.github.thibseisel.identikon.shape.inner
 
-include(":lib")
-project(":lib").name = "identikon"
+import com.github.thibseisel.identikon.rendering.Renderer
+import com.github.thibseisel.identikon.shape.ShapeDefinition
 
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
+/**
+ * A circle centered in the 4-cell grid.
+ */
+internal object QuarterDiskShape : ShapeDefinition {
+    override fun render(renderer: Renderer, cell: Int, index: Int) {
+        val m = cell * 0.4f
+        val s = cell * 1.2f
+
+        if (index != 0) {
+            renderer.addCircle(m, m, s)
+        }
     }
 }

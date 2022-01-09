@@ -1,6 +1,6 @@
-# Kdenticon
+# identikon
 
-Kdenticon is a Kotlin multiplatform library for generating highly recognizable identicons. It is a
+identikon is a Kotlin multiplatform library for generating highly recognizable identicons. It is a
 Kotlin port of [Jdenticon](https://github.com/dmester/jdenticon).
 
 ![](screenshots/sample_1.png)
@@ -22,7 +22,7 @@ You may also use these icons in any other context, for example as a placeholder 
 
 ## Project status
 
-Kdenticon has just released it's first version. More features may be added at a later time. The
+identikon has just released it's first version. More features may be added at a later time. The
 following features are currently available:
 
 - save icons as SVG,
@@ -40,7 +40,7 @@ script :
 
 ```kotlin
 dependencies {
-    implementation("com.github.thibseisel:kdenticon:1.0.0")
+    implementation("com.github.thibseisel:identikon:1.0.0")
 }
 ```
 

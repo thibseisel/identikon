@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Thibault Seisel
+ * Copyright 2022 Thibault Seisel
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ plugins {
     `maven-publish`
 }
 
-group = "com.github.thibseisel.kdenticon"
+group = "com.github.thibseisel.identikon"
 version = "1.0.0"
 
 kotlin {
@@ -134,9 +134,9 @@ publishing {
         artifact(javadocJar)
 
         pom {
-            name.set("Kdenticon")
+            name.set("identikon")
             description.set("A Kotlin multiplatform library for generating highly recognizable identicons.")
-            url.set("https://github.com/thibseisel/kdenticon")
+            url.set("https://github.com/thibseisel/identikon")
 
             licenses {
                 license {
@@ -153,7 +153,7 @@ publishing {
                 }
             }
             scm {
-                url.set("https://github.com/thibseisel/kdenticon")
+                url.set("https://github.com/thibseisel/identikon")
             }
         }
     }

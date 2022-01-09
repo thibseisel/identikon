@@ -13,19 +13,17 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-rootProject.name = "identikon"
-enableFeaturePreview("VERSION_CATALOGS")
+@file:JvmMultifileClass
+@file:JvmName("Identicons")
 
-plugins {
-    id("com.gradle.enterprise") version "3.7.2"
-}
+package com.github.thibseisel.identikon
 
-include(":lib")
-project(":lib").name = "identikon"
+import android.graphics.Bitmap
+import com.github.thibseisel.identikon.android.AndroidBitmapRenderer
 
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-    }
+/**
+ * Renders an [Identicon] onto an Android [Bitmap].
+ */
+public fun Identicon.drawToBitmap(bitmap: Bitmap) {
+    render(AndroidBitmapRenderer(bitmap))
 }

@@ -13,19 +13,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-rootProject.name = "identikon"
-enableFeaturePreview("VERSION_CATALOGS")
 
-plugins {
-    id("com.gradle.enterprise") version "3.7.2"
-}
+package com.github.thibseisel.identikon.shape.inner
 
-include(":lib")
-project(":lib").name = "identikon"
+import com.github.thibseisel.identikon.rendering.Renderer
+import com.github.thibseisel.identikon.shape.ShapeDefinition
 
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
+/**
+ * A shape made of 4 transparent rhombus reminiscent of a chess board.
+ */
+internal object ChessShape : ShapeDefinition {
+    override fun render(renderer: Renderer, cell: Int, index: Int) {
+        val fCell = cell.toFloat()
+        val m = fCell * 0.25f
+
+        renderer.addRectangle(0f, 0f, fCell, fCell)
+        renderer.addRhombus(m, m, fCell - m, fCell - m, true)
     }
 }

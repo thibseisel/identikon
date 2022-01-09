@@ -13,19 +13,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-rootProject.name = "identikon"
-enableFeaturePreview("VERSION_CATALOGS")
+package com.github.thibseisel.identikon
 
-plugins {
-    id("com.gradle.enterprise") version "3.7.2"
-}
+import com.github.thibseisel.identikon.svg.SvgRenderer
+import java.io.IOException
+import java.io.OutputStream
 
-include(":lib")
-project(":lib").name = "identikon"
-
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-    }
+/**
+ * Renders this icon as a SVG file to be sent by the given stream.
+ * Callers are responsive for closing the passed stream.
+ *
+ * @param stream The stream on which SVG instructions should be sent.
+ */
+@Throws(IOException::class)
+public fun Identicon.saveAsSvg(stream: OutputStream) {
+    val renderer = SvgRenderer(size, size)
+    render(renderer)
+    renderer.save(stream.bufferedWriter())
 }

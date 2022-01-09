@@ -13,19 +13,16 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-rootProject.name = "identikon"
-enableFeaturePreview("VERSION_CATALOGS")
 
-plugins {
-    id("com.gradle.enterprise") version "3.7.2"
-}
+package com.github.thibseisel.identikon.android
 
-include(":lib")
-project(":lib").name = "identikon"
+import com.github.thibseisel.identikon.rendering.Color
 
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-    }
+/**
+ * Express a color in a format that's suitable for Android.
+ * On Android, colors are encoded as 32-bits integers where ARGB components are each
+ * 8-bits integers.
+ */
+internal fun Color.toArgbInt(): Int {
+    return ((alpha shl 24) or (red shl 16) or (green shl 8) or blue).toInt()
 }

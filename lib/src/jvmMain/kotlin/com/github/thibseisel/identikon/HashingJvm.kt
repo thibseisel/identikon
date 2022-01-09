@@ -13,19 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-rootProject.name = "identikon"
-enableFeaturePreview("VERSION_CATALOGS")
 
-plugins {
-    id("com.gradle.enterprise") version "3.7.2"
-}
+package com.github.thibseisel.identikon
 
-include(":lib")
-project(":lib").name = "identikon"
+import java.security.MessageDigest
 
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-    }
+internal actual fun sha1Sum(bytes: ByteArray): ByteArray {
+    val algorithm = MessageDigest.getInstance("SHA-1")
+    algorithm.update(bytes)
+    return algorithm.digest()
 }

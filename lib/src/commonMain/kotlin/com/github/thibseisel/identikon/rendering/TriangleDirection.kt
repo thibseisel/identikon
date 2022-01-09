@@ -13,19 +13,31 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-rootProject.name = "identikon"
-enableFeaturePreview("VERSION_CATALOGS")
 
-plugins {
-    id("com.gradle.enterprise") version "3.7.2"
-}
+package com.github.thibseisel.identikon.rendering
 
-include(":lib")
-project(":lib").name = "identikon"
+/**
+ * Defines the direction in which the 90° angle of a triangle points to.
+ * All rectangles in identikon default shapes are right.
+ */
+internal enum class TriangleDirection {
+    /**
+     * The 90 degree angle is pointing to South West.
+     */
+    SOUTH_WEST,
 
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-    }
+    /**
+     * The 90 degree angle is pointing to North West.
+     */
+    NORTH_WEST,
+
+    /**
+     * The 90 degree angle is pointing to North East.
+     */
+    NORTH_EAST,
+
+    /**
+     * The 90 degree angle is pointing to South East.
+     */
+    SOUTH_EAST,
 }
