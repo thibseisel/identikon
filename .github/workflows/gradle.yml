@@ -6,7 +6,7 @@ name: Build and test
 on:
   workflow_dispatch:
   push:
-    branches: [ develop ]
+    branches: [ develop, main ]
   pull_request:
     branches: [ develop ]
 
@@ -25,3 +25,12 @@ jobs:
       uses: gradle/gradle-build-action@v2
     - name: Build and check library with Gradle
       run: ./gradlew :identikon:build --stacktrace
+    - name: Deploy artifacts to Maven Central
+      if: ${{ contains(github.ref, 'main') }}
+      env:
+        ORG_GRADLE_PROJECT_sonatype_username: ${{ secrets.sonatype_username }}
+        ORG_GRADLE_PROJECT_sonatype_password: ${{ secrets.sonatype_password }}
+        ORG_GRADLE_PROJECT_signingKeyId: ${{ secrets.signing_key_id }}
+        ORG_GRADLE_PROJECT_signingSecretKey: ${{ secrets.signing_secret_key }}
+        ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.signing_password }}
+      run: ./gradlew :identikon:publishAllPublicationsToSonatypeRepository --stacktrace

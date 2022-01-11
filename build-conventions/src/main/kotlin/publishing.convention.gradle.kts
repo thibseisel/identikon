@@ -31,8 +31,8 @@ publishing {
             name = "sonatype"
             setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
             credentials {
-                username = findProperty("sonatype.username") as String?
-                password = findProperty("sonatype.password") as String?
+                username = findProperty("sonatype_username") as String?
+                password = findProperty("sonatype_password") as String?
             }
         }
     }
@@ -67,5 +67,10 @@ publishing {
 }
 
 signing {
+    val signingKeyId = findProperty("signingKeyId") as String?
+    val signingKey = findProperty("signingKey") as String?
+    val signingPassword = findProperty("signingPassword") as String?
+    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+
     sign(publishing.publications)
 }
