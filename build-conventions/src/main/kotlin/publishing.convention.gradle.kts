@@ -47,8 +47,8 @@ publishing {
 
             licenses {
                 license {
-                    name.set("Apache 2.0")
-                    url.set("https://opensource.org/licenses/Apache-2.0")
+                    name.set("The Apache License, Version 2.0")
+                    url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
                 }
             }
 
@@ -60,6 +60,8 @@ publishing {
                 }
             }
             scm {
+                connection.set("https://github.com/thibseisel/identikon.git")
+                developerConnection.set("scm:git:ssh://github.com:thibseisel/identikon.git")
                 url.set("https://github.com/thibseisel/identikon")
             }
         }
