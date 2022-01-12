@@ -70,9 +70,11 @@ publishing {
 
 signing {
     val signingKeyId = findProperty("signingKeyId") as String?
-    val signingKey = findProperty("signingKey") as String?
-    val signingPassword = findProperty("signingPassword") as String?
-    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+    if (signingKeyId != null) {
+        val signingKey = findProperty("signingKey") as String?
+        val signingPassword = findProperty("signingPassword") as String?
+        useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+    }
 
     sign(publishing.publications)
 }
