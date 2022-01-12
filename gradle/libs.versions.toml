@@ -1,0 +1,21 @@
+[versions]
+android-gradle = "7.0.4"
+dokka = "1.6.0"
+kotest = "5.0.3"
+kotlin = "1.6.0"
+
+[libraries]
+android-plugin = { module = "com.android.tools.build:gradle", version.ref = "android.gradle" }
+
+kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-framework-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
+kotest-engine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
+kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+
+kotlin-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+
+[plugins]
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "android.gradle" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }

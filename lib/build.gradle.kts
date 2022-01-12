@@ -1,0 +1,101 @@
+/*
+ * Copyright 2022 Thibault Seisel
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+@Suppress("DSL_SCOPE_VIOLATION")
+plugins {
+    kotlin("multiplatform")
+    id("com.android.library")
+    id("publishing.convention")
+}
+
+group = "io.github.thibseisel.identikon"
+version = "1.0.0"
+
+kotlin {
+    explicitApi()
+
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = "11"
+        }
+        testRuns["test"].executionTask.configure {
+            useJUnitPlatform()
+        }
+    }
+
+    android {
+        compilations.all {
+            kotlinOptions.jvmTarget = "11"
+        }
+        publishLibraryVariants("release")
+    }
+
+    sourceSets {
+        val jvmMain by getting
+        getByName("androidMain") {
+            dependsOn(jvmMain)
+        }
+
+        getByName("commonTest") {
+            dependencies {
+                implementation(libs.kotest.engine)
+                implementation(libs.kotest.assertions)
+                implementation(libs.kotest.framework.datatest)
+            }
+        }
+
+        getByName("jvmTest") {
+            dependencies {
+                runtimeOnly(libs.kotest.runner.junit5)
+            }
+        }
+
+        getByName("androidTest") {
+            dependencies {
+                runtimeOnly(libs.kotest.runner.junit5)
+            }
+        }
+
+        all {
+            languageSettings {
+                progressiveMode = true
+                optIn("kotlin.RequiresOptIn")
+            }
+        }
+    }
+}
+
+android {
+    compileSdk = 31
+
+    defaultConfig {
+        minSdk = 21
+        targetSdk = 30
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    sourceSets.getByName("main") {
+        manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    }
+
+    testOptions {
+        unitTests.all(Test::useJUnitPlatform)
+    }
+}

@@ -1,9 +1,7 @@
-[ ![JCenter](https://api.bintray.com/packages/nihilus/maven/kdenticon/images/download.svg) ](https://bintray.com/nihilus/maven/kdenticon/_latestVersion)
+# identikon
 
-# Kdenticon
-
-KDenticon is a Java library for generating highly recognizable identicons.
-Written in Kotlin, it is a port of [Jdenticon](https://github.com/dmester/jdenticon) to the JVM platform.
+identikon is a Kotlin multiplatform library for generating highly recognizable identicons. It is a
+Kotlin port of [Jdenticon](https://github.com/dmester/jdenticon).
 
 ![](screenshots/sample_1.png)
 ![](screenshots/sample_2.png)
@@ -17,78 +15,57 @@ Written in Kotlin, it is a port of [Jdenticon](https://github.com/dmester/jdenti
 
 ## Purpose
 
-An Identicon is a visual representation of a hash value, usually of an IP address, that serves to identify 
-a user of a computer system as a form of avatar while protecting the users' privacy.
+An Identicon is a visual representation of a hash value, usually of an IP address, that serves to
+identify a user of a computer system as a form of avatar while protecting the users' privacy.
 
-You may also use those icons in any other context, for example as a placeholder image.
+You may also use these icons in any other context, for example as a placeholder image.
 
 ## Project status
 
-Kdenticon is still in active development.
-While the icon generation API is functional, at the moment it is only possible to save icons as SVG files.
-You can also use the [Kdenticon-Android extension](kdenticon-android).
+identikon has just released it's first version. More features may be added at a later time. The
+following features are currently available:
+
+- save icons as SVG,
+- draw icons on an Android `Bitmap`
+
+This library is currently supporting the following platforms:
+
+- JVM 11+
+- Android API 21+
 
 ## Setup
 
-The library is available through JCenter.
-Add the following dependency to your Gradle build script :
+The library is available through MavenCentral. Add the following dependency to your Gradle build
+script :
 
-```gradle
+```kotlin
 dependencies {
-    implementation 'com.github.thibseisel:kdenticon:1.0.0-alpha4'
+    implementation("io.github.thibseisel:identikon:1.0.0")
 }
 ```
 
 ## How to use
 
-Create an instance of the `Identicon` class. You have to provide an object whose text representation 
+Create an instance of the `Identicon` class. You have to provide an object whose text representation
 will be used to generate the icon.
 
-Identicons are drawn by an implementation of the `Renderer` class. It should delegates shape drawing 
-to any kind of surface : directly onto a Swing window, into a PNG file or a network connection, etc.
-For the time being, the only built-in `Renderer` implementation is `SvgRenderer`, 
-that saves generated icons to SVG files.
+### Writing icon to an SVG file
 
-For any other use-case, you have to define your own Renderer subclass.
-
-### Writing icon to a SVG file
-
-```java
-public class Main {
-    
-    public static void main(String[] args) {
-        // Create a new instance of the Identicon class with an hash string and the given size
-        int iconSize = 300;
-        Identicon icon = Identicon.fromValue("Hello World!", iconSize);
-        
-        // Creates a new file with the given name
-        icon.saveAsSvg("kdenticon.svg");
-    }
+```kotlin
+// Create a new instance of the Identicon class with an hash string and the given size
+val icon = Identicon.fromValue("Hello World!", iconSize = 300)
+// Writes the icon to a SVG file
+Path("my-icon.svg").outputStream().use {
+    icon.saveAsSvg(it)
 }
 ```
 
-### With your own Renderer subclass
+### Drawing the icon onto an Android Bitmap
 
-```java
-public class Main {
-    
-    public static void main(String[] args) {
-        // Create a new instance of the Identicon class with an hash string and the given size
-        int iconSize = 300;
-        Identicon icon = Identicon.fromValue("Hello World!", iconSize);
-        
-        // Instantiate your own Renderer implementation
-        Renderer renderer = new MyRenderer();
-        
-        // Start the rendering
-        icon.draw(renderer, icon.getIconBounds());
-    }
-}
+```kotlin
+// Create a new instance of the Identicon class with an hash string and the given size
+val icon = Identicon.fromValue("Hello World!", iconSize = 300)
+// Start the rendering
+val targetBitmap = Bitmap.createBitmap(128, 128, Bitmap.Config.ARGB_8888)
+icon.drawToBitmap(targetBitmap)
 ```
-
-## Note about the author
-
-Even if I did all the work of translating from JavaScript / C# to Kotlin, 
-the algorithm used to generate icons and their look is not my own work. 
-If you like the look of the icons, consider leaving a tip to the original author,
-[Daniel Mester Pirttijärvi](https://github.com/dmester).
